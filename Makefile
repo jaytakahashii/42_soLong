@@ -33,7 +33,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "\n"
-	@echo $(B) "--> Into libft directory" $(X)
+	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
 	$(CC) $(CFLAGS) $(MINILIBX) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) -o $(NAME)
