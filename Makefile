@@ -1,4 +1,4 @@
-NAME = push_swap
+NAME = so_long
 LIBFT_NAME = libft
 LIBFT_DIR = libft/
 INCLUDE_DIR = include/
@@ -8,41 +8,13 @@ SRC_DIR = src/
 OBJ_DIR = .obj/
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+MINILIBX = -L mlx -l mlx -framework OpenGL -framework AppKit
 AR = ar
 ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
-COMMAND_UTILS_DIR = command_utils/
-COMMAND_UTILS_SRC = command_utils.c\
-					command_utils2.c\
-					command_utils3.c
-
-STACK_UTILS_DIR = stack_utils/
-STACK_UTILS_SRC = stack_management.c\
-					stack_info.c\
-					stack_checker.c
-
-MAIN_DIR = main/
-MAIN_SRC = main.c\
-			push_swap.c\
-			sort.c
-
-OPERATIONS_DIR = operations/
-OPERATIONS_SRC = swap.c\
-				rotate.c\
-				reverse_rotate.c\
-				push.c
-
-UTILS_DIR = utils/
-UTILS_SRC = push_swap_atoi.c\
-			error.c
-
-SRC_FILES += $(addprefix $(COMMAND_UTILS_DIR), $(COMMAND_UTILS_SRC))
-SRC_FILES += $(addprefix $(STACK_UTILS_DIR), $(STACK_UTILS_SRC))
-SRC_FILES += $(addprefix $(MAIN_DIR), $(MAIN_SRC))
-SRC_FILES += $(addprefix $(OPERATIONS_DIR), $(OPERATIONS_SRC))
-SRC_FILES += $(addprefix $(UTILS_DIR), $(UTILS_SRC))
+SRC_FILES = main.c
 
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
@@ -64,17 +36,12 @@ $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo $(B) "--> Into libft directory" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) -o $(NAME)
+	$(CC) $(CFLAGS) $(MINILIBX) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) -o $(NAME)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
-	@mkdir $(OBJ_DIR)$(COMMAND_UTILS_DIR)
-	@mkdir $(OBJ_DIR)$(STACK_UTILS_DIR)
-	@mkdir $(OBJ_DIR)$(MAIN_DIR)
-	@mkdir $(OBJ_DIR)$(OPERATIONS_DIR)
-	@mkdir $(OBJ_DIR)$(UTILS_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT_INCLUDE) -c $< -o $@
