@@ -48,13 +48,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@echo $(R) "<< push_swap cleaning>>" $(X)
+	@echo $(R) "<< $(NAME) cleaning>>" $(X)
 	$(RM) $(OBJ_DIR)
 	@echo "\n"
 
 fclean:
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo $(R) "<< push_swap fcleaning >>" $(X)
+	@echo $(R) "<< $(NAME) fcleaning >>" $(X)
 	$(RM) $(OBJ_DIR)
 	$(RM) $(NAME)
 	@echo "\n"
@@ -62,9 +62,9 @@ fclean:
 re: fclean all
 
 norm:
-	@echo $(R) "<<< push_swap error count >>>" $(X)
-	@norminette $(SRC_FILES) $(INCLUDE_DIR) | grep Error | wc -l
-	@norminette $(SRC_FILES) $(INCLUDE_DIR) | grep Error || true
+	@echo $(R) "<<< $(NAME) error count >>>" $(X)
+	@norminette $(SRC_DIR) $(INCLUDE_DIR) | grep Error | wc -l
+	@norminette $(SRC_DIR) $(INCLUDE_DIR) | grep Error || true
 	@echo "\n"
 	@$(MAKE) -C $(LIBFT_DIR) norm
 
