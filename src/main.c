@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "mlx.h"
 
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	void	*picture;
 	char	*img_addr;
@@ -11,7 +11,7 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-int key_hook(int keycode, void *param)
+int	key_hook(int keycode, void *param)
 {
 	printf("keycode: %d\n", keycode);
 	return (0);
@@ -25,7 +25,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int coloer)
 	*(unsigned int *)dst = coloer;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	void	*mlx_ptr;
 	void	*mlx_win;
@@ -35,12 +35,6 @@ int main(int ac, char **av)
 	mlx_win = mlx_new_window(mlx_ptr, 1920, 1080, "so_long");
 	img.img = mlx_new_image(mlx_ptr, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-
-	// put image textures/soccer_42_42.xpm
-	img.picture = mlx_xpm_file_to_image(mlx_ptr, "./textures/soccer_42_42.xpm", &img.bits_per_pixel, &img.line_length);
-	img.img_addr = mlx_get_data_addr(img.picture, &img.bits_per_pixel, &img.line_length, &img.endian);
-	mlx_put_image_to_window(mlx_ptr, mlx_win, img.picture, 0, 0);
-	mlx_put_image_to_window(mlx_ptr, mlx_win, img.picture, 100, 100);
 
 	// put circle of the window (color: blue, radius: 50)
 	for (int i = 0; i < 100; i++)
@@ -61,7 +55,12 @@ int main(int ac, char **av)
 		}
 	}
 
-	mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, 500, 500);
+	mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, 0, 0);
+
+	// put image textures/soccer_42_42.xpm
+	img.picture = mlx_xpm_file_to_image(mlx_ptr, "./textures/soccer_42_42.xpm", &img.bits_per_pixel, &img.line_length);
+	mlx_put_image_to_window(mlx_ptr, mlx_win, img.picture, 500, 500);
+	mlx_put_image_to_window(mlx_ptr, mlx_win, img.picture, 700, 500);
 
 	mlx_loop(mlx_ptr);
 	return (0);
