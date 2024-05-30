@@ -1,4 +1,5 @@
 NAME = so_long
+NAME_LINUX = so_long_linux
 LIBFT_NAME = libft
 LIBFT_DIR = libft/
 INCLUDE_DIR = include/
@@ -49,6 +50,8 @@ CUT 		= "\033[K"
 
 all: $(NAME)
 
+linux: $(NAME_LINUX)
+
 $(NAME): $(OBJ_DIR) $(MAC_OBJS)
 	@echo "\n"
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
@@ -58,14 +61,14 @@ $(NAME): $(OBJ_DIR) $(MAC_OBJS)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
 
-linux: $(OBJ_DIR) $(LINUX_OBJS)
+$(NAME_LINUX): $(OBJ_DIR) $(LINUX_OBJS)
 	@echo "\n"
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
-	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LINUX_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME)
+	@echo $(B) "*** $(NAME_LINUX) creating ***" $(X)
+	$(CC) $(CFLAGS) $(LINUX_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME_LINUX)
 	@echo "\n"
-	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
+	@echo $(G) "!!!!!!! $(NAME_LINUX) created success !!!!!!!" $(X)
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
