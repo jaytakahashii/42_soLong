@@ -117,7 +117,6 @@ void	generate_map(char *map_file, t_game *game)
 		line = get_next_str(fd);
 		if (!line)
 			error_handling("Error: Invalid map[[[ file\n");
-		printf("うごかい？%d\n", (int)height);
 		put_map(game, line, height);
 		height++;
 	}
