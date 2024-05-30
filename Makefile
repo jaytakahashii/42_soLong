@@ -16,7 +16,10 @@ ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
-SRC_FILES = main.c
+SRC_FILES = main.c\
+			map.c\
+			image.c\
+			error.c
 
 LINUX_SRC_FILES = main_linux.c
 
@@ -54,7 +57,7 @@ linux: $(OBJ_DIR) $(LINUX_OBJS)
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(LINUX_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LINUX_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
 
