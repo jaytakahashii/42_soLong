@@ -46,6 +46,7 @@ void	put_floor(t_game *game, size_t height)
 {
 	size_t	width;
 	t_image	img;
+	char	c;
 
 	width = 0;
 	img.game = game;
@@ -53,6 +54,9 @@ void	put_floor(t_game *game, size_t height)
 	img.img_width = 42;
 	while (width < game->window_width / 42)
 	{
+		c = game->map[height][width];
+		if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
+			error_handling("Error: Invalid mapppp file\n");
 		if (game->map[height][width] == '0')
 		{
 			img.path = "./textures/empty_42.xpm";
@@ -78,9 +82,11 @@ void	put_floor(t_game *game, size_t height)
 			img.path = "./textures/only_mario_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		printf("%c", game->map[height][width]);
 		// else
+		// {
+		// 	printf("%c", game->map[height][width]);
 		// 	error_handling("Error: Invalid map fileeeeee\n");
+		// }
 		width++;
 	}
 	printf("\n");
@@ -120,5 +126,4 @@ void	generate_map(char *map_file, t_game *game)
 		put_map(game, line, height);
 		height++;
 	}
-	(void)line;
 }
