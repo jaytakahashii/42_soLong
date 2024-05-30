@@ -14,6 +14,7 @@ typedef struct s_data {
 int	key_hook(int keycode, void *param)
 {
 	printf("keycode: %d\n", keycode);
+	printf("param: %p\n", param);
 	return (0);
 }
 
@@ -30,6 +31,9 @@ int	main(int ac, char **av)
 	void	*mlx_ptr;
 	void	*mlx_win;
 	t_data	img;
+
+	printf("argc: %d\n", ac);
+	printf("argv: %s\n", av[0]);
 
 	mlx_ptr = mlx_init();
 	mlx_win = mlx_new_window(mlx_ptr, 1920, 1080, "so_long");
