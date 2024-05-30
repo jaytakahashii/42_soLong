@@ -19,7 +19,8 @@ NORM = norminette
 SRC_FILES = main.c\
 			map.c\
 			image.c\
-			error.c
+			error.c\
+			get_next_str.c
 
 LINUX_SRC_FILES = main_linux.c
 

@@ -6,17 +6,17 @@ static void	calculate_window_size(int fd, t_game *game)
 	size_t	width;
 	size_t	height;
 
-	line = get_next_line(fd);
+	line = get_next_str(fd);
 	if (!line)
 		error_handling("Error: Invalid map file\n");
-	width = ft_strlen(line) - 1;
+	width = ft_strlen(line);
 	height = 1;
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = get_next_str(fd);
 		if (!line)
 			break ;
-		if (ft_strlen(line) - 1 != width)
+		if (ft_strlen(line) != width)
 			error_handling("Error: Invalid map file\n");
 		height++;
 	}
@@ -38,6 +38,8 @@ void	get_window_size(t_game *game, char *map_file)
 	close(fd);
 }
 
+#include <string.h>
+
 void	put_floor(t_game *game, int i)
 {
 	int	j;
@@ -45,13 +47,16 @@ void	put_floor(t_game *game, int i)
 
 	j = 0;
 	img.game = game;
-	img.path = "./textures/only_wall_42.xpm";
 	img.img_height = 42;
 	img.img_width = 42;
+	printf("%lu\n", strlen(game->map[i]));
 	while (game->map[i][j])
 	{
 		if (game->map[i][j] == '0')
+		{
+			img.path = "./textures/empty_42.xpm";
 			put_image(img, j * 42, i * 42);
+		}
 		j++;
 	}
 }
@@ -82,7 +87,7 @@ void	generate_map(char *map_file, t_game *game)
 	i = 0;
 	while (i <= game->window_height / 42)
 	{
-		line = get_next_line(fd);
+		line = get_next_str(fd);
 		if (!line)
 			break ;
 		put_map(game, line, i);

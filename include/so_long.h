@@ -44,4 +44,6 @@ void	*put_image(t_image img, size_t x, size_t y);
 
 void	generate_map(char *map_file, t_game *game);
 
+char	*get_next_str(int fd);
+
 #endif
