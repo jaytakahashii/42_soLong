@@ -22,6 +22,8 @@ static void	calculate_window_size(int fd, t_game *game)
 	}
 	game->window_width = width * 42;
 	game->window_height = height * 42;
+	printf("width / 42: %lu\n", width);
+	printf("height / 42: %lu\n", height);
 }
 
 // get window size
@@ -40,57 +42,84 @@ void	get_window_size(t_game *game, char *map_file)
 
 #include <string.h>
 
-void	put_floor(t_game *game, int i)
+void	put_floor(t_game *game, size_t height)
 {
-	int	j;
+	size_t	width;
 	t_image	img;
 
-	j = 0;
+	width = 0;
 	img.game = game;
 	img.img_height = 42;
 	img.img_width = 42;
-	printf("%lu\n", strlen(game->map[i]));
-	while (game->map[i][j])
+	while (width < game->window_width / 42)
 	{
-		if (game->map[i][j] == '0')
+		if (game->map[height][width] == '0')
 		{
 			img.path = "./textures/empty_42.xpm";
-			put_image(img, j * 42, i * 42);
+			put_image(img, width * 42, height * 42);
 		}
-		j++;
+		if (game->map[height][width] == '1')
+		{
+			img.path = "./textures/only_wall_42.xpm";
+			put_image(img, width * 42, height * 42);
+		}
+		else if (game->map[height][width] == 'C')
+		{
+			img.path = "./textures/only_raion_42.xpm";
+			put_image(img, width * 42, height * 42);
+		}
+		else if (game->map[height][width] == 'E')
+		{
+			img.path = "./textures/only_piich_42.xpm";
+			put_image(img, width * 42, height * 42);
+		}
+		else if (game->map[height][width] == 'P')
+		{
+			img.path = "./textures/only_mario_42.xpm";
+			put_image(img, width * 42, height * 42);
+		}
+		printf("%c", game->map[height][width]);
+		// else
+		// 	error_handling("Error: Invalid map fileeeeee\n");
+		width++;
 	}
+	printf("\n");
 }
 
-void	put_map(t_game *game, char *line, int i)
+void	put_map(t_game *game, char *line, size_t height)
 {
-	int	j = 0;
+	size_t	width = 0;
 
-	game->map[i] = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
-	while (line[j])
+	// game->map[height] = (char *)malloc(sizeof(char) * ((game->window_width / 42) + 1));
+	game->map[height] = (char *)malloc(1000);
+	while (width < game->window_width)
 	{
-		game->map[i][j] = line[j];
-		j++;
+		game->map[height][width] = line[width];
+		width++;
 	}
-	free(line);
-	game->map[i][j] = '\0';
-	put_floor(game, i);
+	game->map[height][width] = '\0';
+	put_floor(game, height);
 }
 
 void	generate_map(char *map_file, t_game *game)
 {
 	int		fd;
 	char	*line;
-	size_t	i;
+	size_t	height;
 
-	game->map = (char **)malloc(sizeof(char *) * ((game->window_height / 42) + 1));
+	// game->map = (char **)malloc(sizeof(char *) * ((game->window_height / 42) + 1));
+	game->map = (char **)malloc(1000);
+	game->map[game->window_height / 42] = NULL;
 	fd = open(map_file, O_RDONLY);
-	i = 0;
-	while (i <= game->window_height / 42)
+	height = 0;
+	while (height < game->window_height / 42)
 	{
 		line = get_next_str(fd);
 		if (!line)
-			break ;
-		put_map(game, line, i);
-		i++;
+			error_handling("Error: Invalid map[[[ file\n");
+		printf("うごかい？%d\n", (int)height);
+		put_map(game, line, height);
+		height++;
 	}
+	(void)line;
 }
