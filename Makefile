@@ -16,20 +16,25 @@ ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
-SRC_FILES = main.c\
-			map.c\
+MAC_SRC_FILES = main.c
+
+LINUX_SRC_FILES = main_linux.c
+
+SRC_FILES = map.c\
 			image.c\
 			error.c\
 			get_next_str.c
 
-LINUX_SRC_FILES = main_linux.c
+MAC_SRC_FILES += $(SRC_FILES)
 
-OBJ_FILES = $(SRC_FILES:%.c=%.o)
+LINUX_SRC_FILES += $(SRC_FILES)
+
+MAC_OBJ_FILES = $(MAC_SRC_FILES:%.c=%.o)
 
 LINUX_OBJ_FILES = $(LINUX_SRC_FILES:%.c=%.o)
 
-SRCS += $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJS += $(addprefix $(OBJ_DIR), $(OBJ_FILES))
+MAC_SRCS += $(addprefix $(SRC_DIR), $(MAC_SRC_FILES))
+MAC_OBJS += $(addprefix $(OBJ_DIR), $(MAC_OBJ_FILES))
 
 LINUX_SRCS += $(addprefix $(SRC_DIR), $(LINUX_SRC_FILES))
 LINUX_OBJS += $(addprefix $(OBJ_DIR), $(LINUX_OBJ_FILES))
@@ -44,12 +49,12 @@ CUT 		= "\033[K"
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(MAC_OBJS)
 	@echo "\n"
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(MAC_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
 
@@ -83,6 +88,8 @@ fclean:
 	@echo "\n"
 
 re: fclean all
+
+relinux: fclean linux
 
 norm:
 	@echo $(R) "<<< $(NAME) error count >>>" $(X)

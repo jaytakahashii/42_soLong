@@ -3,19 +3,22 @@
 #include <X11/keysym.h>
 #include "mlx.h"
 
-int event_handler(int key, void *mlx)
-{
- printf("called\n");
- return (0);
-}
+#include "so_long.h"
 
-int main(void)
+int	main(int ac, char **av)
 {
- void *mlx;
- void *mlx_win;
+	t_game	game;
 
- mlx = mlx_init();
- mlx_win = mlx_new_window(mlx, 300, 300, "Hello World");
- mlx_hook(mlx_win, KeyPress, KeyPressMask, event_handler, mlx);
- mlx_loop(mlx);
+	// error handling for invalid arguments too many or too few
+	if (ac != 2)
+		error_handling("Error: Invalid arguments\n");
+	get_window_size(&game, av[1]);
+	game.mlx = mlx_init();
+	game.window = mlx_new_window(game.mlx, game.window_width, game.window_height, "so_long");
+
+	// generate map
+	generate_map(av[1], &game);
+
+	mlx_loop(game.mlx);
+	return (0);
 }
