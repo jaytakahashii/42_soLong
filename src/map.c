@@ -9,14 +9,14 @@ static void	calculate_window_size(int fd, t_game *game)
 	line = get_next_line(fd);
 	if (!line)
 		error_handling("Error: Invalid map file\n");
-	width = ft_strlen(line);
+	width = ft_strlen(line) - 1;
 	height = 1;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strlen(line) != width)
+		if (ft_strlen(line) - 1 != width)
 			error_handling("Error: Invalid map file\n");
 		height++;
 	}
