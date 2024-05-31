@@ -22,8 +22,6 @@ static void	calculate_window_size(int fd, t_game *game)
 	}
 	game->window_width = width * 42;
 	game->window_height = height * 42;
-	printf("width / 42: %lu\n", width);
-	printf("height / 42: %lu\n", height);
 }
 
 // get window size
@@ -82,14 +80,8 @@ void	put_floor(t_game *game, size_t height)
 			img.path = "./textures/only_mario_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		// else
-		// {
-		// 	printf("%c", game->map[height][width]);
-		// 	error_handling("Error: Invalid map fileeeeee\n");
-		// }
 		width++;
 	}
-	printf("\n");
 }
 
 void	put_map(t_game *game, char *line, size_t height)
