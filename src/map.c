@@ -44,7 +44,7 @@ void	put_floor(t_game *game, size_t height)
 {
 	size_t	width;
 	t_image	img;
-	char	c;
+	char	map_c;
 
 	width = 0;
 	img.game = game;
@@ -52,30 +52,30 @@ void	put_floor(t_game *game, size_t height)
 	img.img_width = 42;
 	while (width < game->window_width / 42)
 	{
-		c = game->map[height][width];
-		if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
+		map_c = game->map[height][width];
+		if (map_c != '0' && map_c != '1' && map_c != 'C' && map_c != 'E' && map_c != 'P')
 			error_handling("Error: Invalid mapppp file\n");
-		if (game->map[height][width] == '0')
+		if (map_c == '0')
 		{
 			img.path = "./textures/empty_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		if (game->map[height][width] == '1')
+		if (map_c == '1')
 		{
 			img.path = "./textures/only_wall_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		else if (game->map[height][width] == 'C')
+		else if (map_c == 'C')
 		{
 			img.path = "./textures/only_raion_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		else if (game->map[height][width] == 'E')
+		else if (map_c == 'E')
 		{
 			img.path = "./textures/only_piich_42.xpm";
 			put_image(img, width * 42, height * 42);
 		}
-		else if (game->map[height][width] == 'P')
+		else if (map_c == 'P')
 		{
 			img.path = "./textures/only_mario_42.xpm";
 			put_image(img, width * 42, height * 42);
