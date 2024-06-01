@@ -53,30 +53,33 @@ void	put_floor(t_game *game, size_t height)
 		map_c = game->map[height][width];
 		if (map_c != '0' && map_c != '1' && map_c != 'C' && map_c != 'E' && map_c != 'P')
 			error_handling("Invalid map", "map must contain only 0, 1, C, E, and P", game);
-		if (map_c == '0')
+		if (map_c == EMPTY)
 		{
 			img.path = "./textures/empty_42.xpm";
 			put_image(img, width * SIZE, height * SIZE);
 		}
-		if (map_c == '1')
+		if (map_c == WALL)
 		{
 			img.path = "./textures/only_wall_42.xpm";
 			put_image(img, width * SIZE, height * SIZE);
 		}
-		else if (map_c == 'C')
+		else if (map_c == COLLECTIBLE)
 		{
-			img.path = "./textures/only_raion_42.xpm";
+			img.path = "./textures/only_coin_42.xpm";
 			put_image(img, width * SIZE, height * SIZE);
+			game->total_collectibles++;
 		}
-		else if (map_c == 'E')
+		else if (map_c == EXIT)
 		{
 			img.path = "./textures/only_piich_42.xpm";
 			put_image(img, width * SIZE, height * SIZE);
 		}
-		else if (map_c == 'P')
+		else if (map_c == PLAYER)
 		{
 			img.path = "./textures/only_mario_42.xpm";
 			put_image(img, width * SIZE, height * SIZE);
+			game->player.x = width;
+			game->player.y = height;
 		}
 		width++;
 	}

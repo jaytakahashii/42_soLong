@@ -15,14 +15,28 @@ int	key_check(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_window(game);
 	if (keycode == UP)
-		printf("UP\n");
+		up_player(game);
 	return (0);
+}
+
+void	init_game(t_game *game)
+{
+	game->mlx = NULL;
+	game->window = NULL;
+	game->map = NULL;
+	game->window_width = 0;
+	game->window_height = 0;
+	game->total_collectibles = 0;
+	game->player.x = 0;
+	game->player.y = 0;
+	game->player.collectibles = 0;
 }
 
 int	main(int ac, char **av)
 {
 	t_game	game;
 
+	init_game(&game);
 	if (ac != 2)
 		error_handling("Invalid arguments", "too few or too many arguments", NULL);
 	get_window_size(&game, av[1]);
