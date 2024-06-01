@@ -1,31 +1,18 @@
 #include "so_long.h"
 
-void	update_map(t_game *game, int x, int y)
-{
-	t_image	img;
-
-	img.game = game;
-	img.path = "textures/empty_42.xpm";
-	put_image(img, x * IMAGE_SIZE, y * IMAGE_SIZE);
-}
-
 void	up_player(t_game *game)
 {
 	printf("up\n");
-	t_image	img;
-
-	img.game = game;
 	if (game->map[game->player.y - 1][game->player.x] == WALL)
 		put_message("You can't go up", "That's a wall");
 	else if (game->map[game->player.y - 1][game->player.x] == COLLECTIBLE)
 	{
-		update_map(game, game->player.x, game->player.y);
-		img.path = "textures/only_mario_42.xpm";
+		put_image(game, COLLECTIBLE, game->player.x, game->player.y);
 		game->map[game->player.y - 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y -= 1;
 		game->player.collectibles += 1;
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 	else if (game->map[game->player.y - 1][game->player.x] == EXIT)
 	{
@@ -39,32 +26,27 @@ void	up_player(t_game *game)
 	}
 	else
 	{
-		update_map(game, game->player.x, game->player.y);
-		img.path = "textures/only_mario_42.xpm";
+		put_image(game, EMPTY, game->player.x, game->player.y);
 		game->map[game->player.y - 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y -= 1;
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 }
 
 void	down_player(t_game *game)
 {
 	printf("down\n");
-	t_image	img;
-
-	img.game = game;
 	if (game->map[game->player.y + 1][game->player.x] == WALL)
 		put_message("You can't go down", "That's a wall");
 	else if (game->map[game->player.y + 1][game->player.x] == COLLECTIBLE)
 	{
-		update_map(game, game->player.x, game->player.y);
+		put_image(game, COLLECTIBLE, game->player.x, game->player.y);
 		game->map[game->player.y + 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y += 1;
 		game->player.collectibles += 1;
-		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 	else if (game->map[game->player.y + 1][game->player.x] == EXIT)
 	{
@@ -78,32 +60,27 @@ void	down_player(t_game *game)
 	}
 	else
 	{
-		update_map(game, game->player.x, game->player.y);
-		img.path = "textures/only_mario_42.xpm";
+		put_image(game, EMPTY, game->player.x, game->player.y);
 		game->map[game->player.y + 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y += 1;
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 }
 
 void	left_player(t_game *game)
 {
 	printf("left\n");
-	t_image	img;
-
-	img.game = game;
 	if (game->map[game->player.y][game->player.x - 1] == WALL)
 		put_message("You can't go left", "That's a wall");
 	else if (game->map[game->player.y][game->player.x - 1] == COLLECTIBLE)
 	{
-		update_map(game, game->player.x, game->player.y);
+		put_image(game, COLLECTIBLE, game->player.x, game->player.y);
 		game->map[game->player.y][game->player.x - 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x -= 1;
 		game->player.collectibles += 1;
-		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 	else if (game->map[game->player.y][game->player.x - 1] == EXIT)
 	{
@@ -117,32 +94,27 @@ void	left_player(t_game *game)
 	}
 	else
 	{
-		update_map(game, game->player.x, game->player.y);
-		img.path = "textures/only_mario_42.xpm";
+		put_image(game, EMPTY, game->player.x, game->player.y);
 		game->map[game->player.y][game->player.x - 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x -= 1;
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 }
 
 void	right_player(t_game *game)
 {
 	printf("right\n");
-	t_image	img;
-
-	img.game = game;
 	if (game->map[game->player.y][game->player.x + 1] == WALL)
 		put_message("You can't go right", "That's a wall");
 	else if (game->map[game->player.y][game->player.x + 1] == COLLECTIBLE)
 	{
-		update_map(game, game->player.x, game->player.y);
+		put_image(game, COLLECTIBLE, game->player.x, game->player.y);
 		game->map[game->player.y][game->player.x + 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x += 1;
 		game->player.collectibles += 1;
-		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 	else if (game->map[game->player.y][game->player.x + 1] == EXIT)
 	{
@@ -156,11 +128,10 @@ void	right_player(t_game *game)
 	}
 	else
 	{
-		update_map(game, game->player.x, game->player.y);
-		img.path = "textures/only_mario_42.xpm";
+		put_image(game, EMPTY, game->player.x, game->player.y);
 		game->map[game->player.y][game->player.x + 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x += 1;
-		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
+		put_image(game, PLAYER, game->player.x, game->player.y);
 	}
 }

@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
 	window_init(&game, av[1]);
-	map_init(av[1], &game);
+	map_init(&game);
 
 	mlx_hook(game.window, DestroyNotify, StructureNotifyMask, close_window, &game);
 	mlx_key_hook(game.window, key_check, &game);

@@ -1,27 +1,58 @@
 #include "so_long.h"
 
-static void	calculate_window_size(int fd, t_game *game)
+static void	check_map(char **map, t_game *game)
 {
-	char	*line;
-	int	width;
-	int	height;
+	int		height;
+	int		width;
+	char	map_c;
 
-	line = get_next_str(fd);
-	if (!line)
-		error_and_exit("GNL error", "failed to read map file", game);
-	width = ft_strlen(line);
-	height = 1;
-	while (1)
+	if ((int)ft_strlen(map[0]) < 3)
+		error_and_exit("Invalid map", "map width size must be 2 or more", game);
+	if ((int)ft_strlen(map[0]) > MAX_WIDTH_IMAGE)
+		error_and_exit("Invalid map", "map width size is too big", game);
+	height = 0;
+	while (map[height])
 	{
-		line = get_next_str(fd);
-		if (!line)
-			break ;
-		if ((int)ft_strlen(line) != width)
-			error_and_exit("Invalid map", "map must be rectangular", game);
+		width = 0;
+		while (map[height][width])
+		{
+			map_c = map[height][width];
+			if (map_c != EMPTY && map_c != WALL && map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
+				error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
+			width++;
+		}
+		if (width != (int)ft_strlen(map[0]))
+			error_and_exit("Invalid map", "map width size is not rectangular", game);
 		height++;
+		if (height > MAX_HEIGHT_IMAGE)
+			error_and_exit("Invalid map", "map height size is too big", game);
 	}
+	if (height < 3)
+		error_and_exit("Invalid map", "map height size must be 2 or more", game);
 	game->window_width = width * IMAGE_SIZE;
 	game->window_height = height * IMAGE_SIZE;
+	game->map_width = width;
+	game->map_height = height;
+}
+
+static void	get_map(int fd, t_game *game)
+{
+	char	*map_str;
+	ssize_t read_bytes;
+
+	map_str = malloc(sizeof(char) * READ_SIZE);
+	if (!map_str)
+		error_and_exit("Error: Malloc error", NULL, game);
+	read_bytes = read(fd, map_str, READ_SIZE);
+	if (read_bytes < 0)
+		error_and_exit("Error: Read error", NULL, game);
+	if (read_bytes >= MAX_READ_SIZE)
+		error_and_exit("Error: Map is too big", NULL, game);
+	map_str[read_bytes] = '\0';
+	game->map = ft_split(map_str, '\n');
+	if (!game->map)
+		error_and_exit("Error: Split error", NULL, game);
+	free(map_str);
 }
 
 void	window_init(t_game *game, char *map_file_path)
@@ -33,93 +64,34 @@ void	window_init(t_game *game, char *map_file_path)
 		error_and_exit("Invalid map file", "failed to open map file", game);
 	if (ft_strnstr(map_file_path, ".ber", ft_strlen(map_file_path)) == NULL)
 		error_and_exit("Invalid map file", "file extension must be .ber", game);
-	calculate_window_size(fd, game);
+	get_map(fd, game);
 	close(fd);
+	check_map(game->map, game);
 	game->mlx = mlx_init();
 	game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "so_long");
 }
 
-void	put_floor(t_game *game, int height)
+void	map_init(t_game *game)
 {
-	int	width;
-	t_image	img;
-	char	map_c;
+	int		width;
+	int		height;
 
-	width = 0;
-	img.game = game;
-	while (width < game->window_width / IMAGE_SIZE)
-	{
-		map_c = game->map[height][width];
-		if (map_c != '0' && map_c != '1' && map_c != 'C' && map_c != 'E' && map_c != 'P')
-			error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
-		if (map_c == EMPTY)
-		{
-			img.path = "./textures/empty_42.xpm";
-			put_image(img, width * IMAGE_SIZE, height * IMAGE_SIZE);
-		}
-		if (map_c == WALL)
-		{
-			img.path = "./textures/only_wall_42.xpm";
-			put_image(img, width * IMAGE_SIZE, height * IMAGE_SIZE);
-		}
-		else if (map_c == COLLECTIBLE)
-		{
-			img.path = "./textures/only_coin_42.xpm";
-			put_image(img, width * IMAGE_SIZE, height * IMAGE_SIZE);
-			game->total_collectibles++;
-		}
-		else if (map_c == EXIT)
-		{
-			img.path = "./textures/only_piich_42.xpm";
-			put_image(img, width * IMAGE_SIZE, height * IMAGE_SIZE);
-		}
-		else if (map_c == PLAYER)
-		{
-			img.path = "./textures/only_mario_42.xpm";
-			put_image(img, width * IMAGE_SIZE, height * IMAGE_SIZE);
-			game->player.x = width;
-			game->player.y = height;
-		}
-		width++;
-	}
-}
-
-void	put_map(t_game *game, char *line, int height)
-{
-	int	width = 0;
-
-	// game->map[height] = (char *)malloc(sizeof(char) * ((game->window_width / 42) + 1));
-	game->map[height] = (char *)malloc(1000);
-	if (!game->map[height])
-		error_and_exit("Error: Malloc error", NULL, game);
-	while (width < game->window_width)
-	{
-		game->map[height][width] = line[width];
-		width++;
-	}
-	game->map[height][width] = '\0';
-	put_floor(game, height);
-}
-
-void	map_init(char *map_file, t_game *game)
-{
-	int		fd;
-	char	*line;
-	int	height;
-
-	// game->map = (char **)malloc(sizeof(char *) * ((game->window_height / 42) + 1));
-	game->map = (char **)malloc(1000);
-	if (!game->map)
-		error_and_exit("Error: Malloc error", NULL, game);
-	game->map[game->window_height / IMAGE_SIZE] = NULL;
-	fd = open(map_file, O_RDONLY);
 	height = 0;
-	while (height < game->window_height / IMAGE_SIZE)
+	while (height < game->map_height)
 	{
-		line = get_next_str(fd);
-		if (!line)
-			error_and_exit("Error: GNL error", NULL, game);
-		put_map(game, line, height);
+		width = 0;
+		while (width < game->map_width)
+		{
+			if (game->map[height][width] == PLAYER)
+			{
+				game->player.x = width;
+				game->player.y = height;
+			}
+			if (game->map[height][width] == COLLECTIBLE)
+				game->total_collectibles++;
+			put_image(game, game->map[height][width], width, height);
+			width++;
+		}
 		height++;
 	}
 }
