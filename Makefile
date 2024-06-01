@@ -9,7 +9,7 @@ SRC_DIR = src/
 OBJ_DIR = .obj/
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit
+MLX_MAC_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit
 MLX_LINUX_FLAGS = -lmlx_Linux -lXext -lX11
 
 AR = ar
@@ -17,28 +17,16 @@ ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
-MAC_SRC_FILES = main.c
-
-LINUX_SRC_FILES = main_linux.c
-
-SRC_FILES = map.c\
+SRC_FILES = main.c\
+			map.c\
 			image.c\
 			error.c\
 			get_next_str.c
 
-MAC_SRC_FILES += $(SRC_FILES)
+OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
-LINUX_SRC_FILES += $(SRC_FILES)
-
-MAC_OBJ_FILES = $(MAC_SRC_FILES:%.c=%.o)
-
-LINUX_OBJ_FILES = $(LINUX_SRC_FILES:%.c=%.o)
-
-MAC_SRCS += $(addprefix $(SRC_DIR), $(MAC_SRC_FILES))
-MAC_OBJS += $(addprefix $(OBJ_DIR), $(MAC_OBJ_FILES))
-
-LINUX_SRCS += $(addprefix $(SRC_DIR), $(LINUX_SRC_FILES))
-LINUX_OBJS += $(addprefix $(OBJ_DIR), $(LINUX_OBJ_FILES))
+SRCS += $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJS += $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 Y 			= "\033[33m"
 R 			= "\033[31m"
@@ -52,21 +40,21 @@ all: $(NAME)
 
 linux: $(NAME_LINUX)
 
-$(NAME): $(OBJ_DIR) $(MAC_OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "\n"
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(MAC_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_MAC_FLAGS) -o $(NAME)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
 
-$(NAME_LINUX): $(OBJ_DIR) $(LINUX_OBJS)
+$(NAME_LINUX): $(OBJ_DIR) $(OBJS)
 	@echo "\n"
 	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME_LINUX) creating ***" $(X)
-	$(CC) $(CFLAGS) $(LINUX_OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME_LINUX)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME_LINUX)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME_LINUX) created success !!!!!!!" $(X)
 

@@ -5,11 +5,31 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 
-# include <stdio.h>
 # include "mlx.h"
 
+# include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+
+# ifdef __APPLE__
+#  define ESC 53
+#  define UP 13
+#  define DOWN 1
+#  define LEFT 0
+#  define RIGHT 2
+# endif
+
+# ifdef __linux__
+#  include <stdio.h>
+#  include <X11/X.h>
+#  include <X11/keysym.h>
+
+#  define ESC 65307
+#  define UP 119
+#  define DOWN 115
+#  define LEFT 97
+#  define RIGHT 100
+# endif
 
 # define SIZE 42
 
