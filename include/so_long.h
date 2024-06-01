@@ -77,6 +77,10 @@ void	generate_map(char *map_file, t_game *game);
 char	*get_next_str(int fd);
 
 void	up_player(t_game *game);
+void 	down_player(t_game *game);
+void 	left_player(t_game *game);
+void 	right_player(t_game *game);
+
 
 int		close_window(t_game *game);
 

@@ -11,10 +11,17 @@ int	close_window(t_game *game)
 
 int	key_check(int keycode, t_game *game)
 {
+	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		close_window(game);
 	if (keycode == UP)
 		up_player(game);
+	if (keycode == DOWN)
+		down_player(game);
+	if (keycode == LEFT)
+		left_player(game);
+	if (keycode == RIGHT)
+		right_player(game);
 	return (0);
 }
 
