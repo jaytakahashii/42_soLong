@@ -36,7 +36,7 @@ typedef struct s_image
 	int		img_width;
 }				t_image;
 
-void	error_handling(char *message);
+void	error_handling(char *error_message, char *message, t_game *game);
 
 void	get_window_size(t_game *game, char *map_file);
 

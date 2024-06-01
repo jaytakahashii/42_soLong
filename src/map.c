@@ -8,7 +8,7 @@ static void	calculate_window_size(int fd, t_game *game)
 
 	line = get_next_str(fd);
 	if (!line)
-		error_handling("Error: Invalid map file\n");
+		error_handling("GNL error", "failed to read map file", game);
 	width = ft_strlen(line);
 	height = 1;
 	while (1)
@@ -17,7 +17,7 @@ static void	calculate_window_size(int fd, t_game *game)
 		if (!line)
 			break ;
 		if (ft_strlen(line) != width)
-			error_handling("Error: Invalid map file\n");
+			error_handling("Invalid map", "map must be rectangular", game);
 		height++;
 	}
 	game->window_width = width * 42;
@@ -25,15 +25,15 @@ static void	calculate_window_size(int fd, t_game *game)
 }
 
 // get window size
-void	get_window_size(t_game *game, char *map_file)
+void	get_window_size(t_game *game, char *map_file_name)
 {
 	int	fd;
 
-	fd = open(map_file, O_RDONLY);
+	fd = open(map_file_name, O_RDONLY);
 	if (fd < 0)
-		error_handling("Error: Invalid map file\n");
-	if (ft_strnstr(map_file, ".ber", ft_strlen(map_file)) == NULL)
-		error_handling("Error: Invalid map file\n");
+		error_handling("Invalid map file", "failed to open map file", game);
+	if (ft_strnstr(map_file_name, ".ber", ft_strlen(map_file_name)) == NULL)
+		error_handling("Invalid map file", "file extension must be .ber", game);
 	calculate_window_size(fd, game);
 	close(fd);
 }
@@ -54,7 +54,7 @@ void	put_floor(t_game *game, size_t height)
 	{
 		map_c = game->map[height][width];
 		if (map_c != '0' && map_c != '1' && map_c != 'C' && map_c != 'E' && map_c != 'P')
-			error_handling("Error: Invalid mapppp file\n");
+			error_handling("Invalid map", "map must contain only 0, 1, C, E, and P", game);
 		if (map_c == '0')
 		{
 			img.path = "./textures/empty_42.xpm";
@@ -90,6 +90,8 @@ void	put_map(t_game *game, char *line, size_t height)
 
 	// game->map[height] = (char *)malloc(sizeof(char) * ((game->window_width / 42) + 1));
 	game->map[height] = (char *)malloc(1000);
+	if (!game->map[height])
+		error_handling("Error: Malloc error", NULL, game);
 	while (width < game->window_width)
 	{
 		game->map[height][width] = line[width];
@@ -107,6 +109,8 @@ void	generate_map(char *map_file, t_game *game)
 
 	// game->map = (char **)malloc(sizeof(char *) * ((game->window_height / 42) + 1));
 	game->map = (char **)malloc(1000);
+	if (!game->map)
+		error_handling("Error: Malloc error", NULL, game);
 	game->map[game->window_height / 42] = NULL;
 	fd = open(map_file, O_RDONLY);
 	height = 0;
@@ -114,7 +118,7 @@ void	generate_map(char *map_file, t_game *game)
 	{
 		line = get_next_str(fd);
 		if (!line)
-			error_handling("Error: Invalid map[[[ file\n");
+			error_handling("Error: GNL error", NULL, game);
 		put_map(game, line, height);
 		height++;
 	}

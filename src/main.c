@@ -4,9 +4,8 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	// error handling for invalid arguments too many or too few
 	if (ac != 2)
-		error_handling("Error: Invalid arguments\n");
+		error_handling("Invalid arguments", "too few or too many arguments", NULL);
 	get_window_size(&game, av[1]);
 	game.mlx = mlx_init();
 	game.window = mlx_new_window(game.mlx, game.window_width, game.window_height, "so_long");
