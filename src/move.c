@@ -6,7 +6,7 @@ void	update_map(t_game *game, size_t x, size_t y)
 
 	img.game = game;
 	img.path = "textures/empty_42.xpm";
-	put_image(img, x * SIZE, y * SIZE);
+	put_image(img, x * IMAGE_SIZE, y * IMAGE_SIZE);
 }
 
 void	up_player(t_game *game)
@@ -25,7 +25,7 @@ void	up_player(t_game *game)
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y -= 1;
 		game->player.collectibles += 1;
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 	else if (game->map[game->player.y - 1][game->player.x] == EXIT)
 	{
@@ -44,7 +44,7 @@ void	up_player(t_game *game)
 		game->map[game->player.y - 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y -= 1;
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 }
 
@@ -64,7 +64,7 @@ void	down_player(t_game *game)
 		game->player.y += 1;
 		game->player.collectibles += 1;
 		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 	else if (game->map[game->player.y + 1][game->player.x] == EXIT)
 	{
@@ -83,7 +83,7 @@ void	down_player(t_game *game)
 		game->map[game->player.y + 1][game->player.x] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.y += 1;
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 }
 
@@ -103,7 +103,7 @@ void	left_player(t_game *game)
 		game->player.x -= 1;
 		game->player.collectibles += 1;
 		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 	else if (game->map[game->player.y][game->player.x - 1] == EXIT)
 	{
@@ -122,7 +122,7 @@ void	left_player(t_game *game)
 		game->map[game->player.y][game->player.x - 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x -= 1;
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 }
 
@@ -142,7 +142,7 @@ void	right_player(t_game *game)
 		game->player.x += 1;
 		game->player.collectibles += 1;
 		img.path = "textures/only_mario_42.xpm";
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 	else if (game->map[game->player.y][game->player.x + 1] == EXIT)
 	{
@@ -161,6 +161,6 @@ void	right_player(t_game *game)
 		game->map[game->player.y][game->player.x + 1] = PLAYER;
 		game->map[game->player.y][game->player.x] = EMPTY;
 		game->player.x += 1;
-		put_image(img, game->player.x * SIZE, game->player.y * SIZE);
+		put_image(img, game->player.x * IMAGE_SIZE, game->player.y * IMAGE_SIZE);
 	}
 }

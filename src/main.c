@@ -25,7 +25,7 @@ int	key_check(int keycode, t_game *game)
 	return (0);
 }
 
-void	init_game(t_game *game)
+void	game_init(t_game *game)
 {
 	game->mlx = NULL;
 	game->window = NULL;
@@ -42,15 +42,11 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	init_game(&game);
+	game_init(&game);
 	if (ac != 2)
-		error_handling("Invalid arguments", "too few or too many arguments", NULL);
-	get_window_size(&game, av[1]);
-	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, game.window_width, game.window_height, "so_long");
-
-	// generate map
-	generate_map(av[1], &game);
+		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
+	window_init(&game, av[1]);
+	map_init(av[1], &game);
 
 	mlx_hook(game.window, DestroyNotify, StructureNotifyMask, close_window, &game);
 	mlx_key_hook(game.window, key_check, &game);

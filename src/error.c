@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	error_handling(char *error_message, char *message, t_game *game)
+void	error_and_exit(char *error_message, char *message, t_game *game)
 {
 	ft_printf("Error: %s", error_message);
 	if (message)

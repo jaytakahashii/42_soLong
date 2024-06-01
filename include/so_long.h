@@ -31,7 +31,7 @@
 #  define RIGHT 100
 # endif
 
-# define SIZE 42
+# define IMAGE_SIZE 42
 
 # define EMPTY '0'
 # define WALL '1'
@@ -64,15 +64,15 @@ typedef struct s_image
 	void	*img;
 }				t_image;
 
-void	error_handling(char *error_message, char *message, t_game *game);
+void	error_and_exit(char *error_message, char *message, t_game *game);
 
 void	put_message(char *error_message, char *message);
 
-void	get_window_size(t_game *game, char *map_file);
+void	window_init(t_game *game, char *map_file);
 
 void	*put_image(t_image img, size_t x, size_t y);
 
-void	generate_map(char *map_file, t_game *game);
+void	map_init(char *map_file, t_game *game);
 
 char	*get_next_str(int fd);
 
