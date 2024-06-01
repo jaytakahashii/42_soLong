@@ -20,8 +20,8 @@ static void	calculate_window_size(int fd, t_game *game)
 			error_handling("Invalid map", "map must be rectangular", game);
 		height++;
 	}
-	game->window_width = width * 42;
-	game->window_height = height * 42;
+	game->window_width = width * SIZE;
+	game->window_height = height * SIZE;
 }
 
 // get window size
@@ -48,9 +48,7 @@ void	put_floor(t_game *game, size_t height)
 
 	width = 0;
 	img.game = game;
-	img.img_height = 42;
-	img.img_width = 42;
-	while (width < game->window_width / 42)
+	while (width < game->window_width / SIZE)
 	{
 		map_c = game->map[height][width];
 		if (map_c != '0' && map_c != '1' && map_c != 'C' && map_c != 'E' && map_c != 'P')
@@ -58,27 +56,27 @@ void	put_floor(t_game *game, size_t height)
 		if (map_c == '0')
 		{
 			img.path = "./textures/empty_42.xpm";
-			put_image(img, width * 42, height * 42);
+			put_image(img, width * SIZE, height * SIZE);
 		}
 		if (map_c == '1')
 		{
 			img.path = "./textures/only_wall_42.xpm";
-			put_image(img, width * 42, height * 42);
+			put_image(img, width * SIZE, height * SIZE);
 		}
 		else if (map_c == 'C')
 		{
 			img.path = "./textures/only_raion_42.xpm";
-			put_image(img, width * 42, height * 42);
+			put_image(img, width * SIZE, height * SIZE);
 		}
 		else if (map_c == 'E')
 		{
 			img.path = "./textures/only_piich_42.xpm";
-			put_image(img, width * 42, height * 42);
+			put_image(img, width * SIZE, height * SIZE);
 		}
 		else if (map_c == 'P')
 		{
 			img.path = "./textures/only_mario_42.xpm";
-			put_image(img, width * 42, height * 42);
+			put_image(img, width * SIZE, height * SIZE);
 		}
 		width++;
 	}
@@ -111,10 +109,10 @@ void	generate_map(char *map_file, t_game *game)
 	game->map = (char **)malloc(1000);
 	if (!game->map)
 		error_handling("Error: Malloc error", NULL, game);
-	game->map[game->window_height / 42] = NULL;
+	game->map[game->window_height / SIZE] = NULL;
 	fd = open(map_file, O_RDONLY);
 	height = 0;
-	while (height < game->window_height / 42)
+	while (height < game->window_height / SIZE)
 	{
 		line = get_next_str(fd);
 		if (!line)

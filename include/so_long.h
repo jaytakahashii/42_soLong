@@ -11,6 +11,8 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
+# define SIZE 42
+
 typedef struct s_player
 {
 	size_t	x;
@@ -32,8 +34,6 @@ typedef struct s_image
 	void	*path;
 	t_game	*game;
 	void	*img;
-	int		img_height;
-	int		img_width;
 }				t_image;
 
 void	error_handling(char *error_message, char *message, t_game *game);
