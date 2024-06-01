@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	*put_image(t_image img, size_t x, size_t y)
+void	*put_image(t_image img, int x, int y)
 {
 	int size;
 

@@ -3,8 +3,8 @@
 static void	calculate_window_size(int fd, t_game *game)
 {
 	char	*line;
-	size_t	width;
-	size_t	height;
+	int	width;
+	int	height;
 
 	line = get_next_str(fd);
 	if (!line)
@@ -16,7 +16,7 @@ static void	calculate_window_size(int fd, t_game *game)
 		line = get_next_str(fd);
 		if (!line)
 			break ;
-		if (ft_strlen(line) != width)
+		if ((int)ft_strlen(line) != width)
 			error_and_exit("Invalid map", "map must be rectangular", game);
 		height++;
 	}
@@ -24,15 +24,14 @@ static void	calculate_window_size(int fd, t_game *game)
 	game->window_height = height * IMAGE_SIZE;
 }
 
-// get window size
-void	window_init(t_game *game, char *map_file_name)
+void	window_init(t_game *game, char *map_file_path)
 {
 	int	fd;
 
-	fd = open(map_file_name, O_RDONLY);
+	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
 		error_and_exit("Invalid map file", "failed to open map file", game);
-	if (ft_strnstr(map_file_name, ".ber", ft_strlen(map_file_name)) == NULL)
+	if (ft_strnstr(map_file_path, ".ber", ft_strlen(map_file_path)) == NULL)
 		error_and_exit("Invalid map file", "file extension must be .ber", game);
 	calculate_window_size(fd, game);
 	close(fd);
@@ -40,9 +39,9 @@ void	window_init(t_game *game, char *map_file_name)
 	game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "so_long");
 }
 
-void	put_floor(t_game *game, size_t height)
+void	put_floor(t_game *game, int height)
 {
-	size_t	width;
+	int	width;
 	t_image	img;
 	char	map_c;
 
@@ -85,9 +84,9 @@ void	put_floor(t_game *game, size_t height)
 	}
 }
 
-void	put_map(t_game *game, char *line, size_t height)
+void	put_map(t_game *game, char *line, int height)
 {
-	size_t	width = 0;
+	int	width = 0;
 
 	// game->map[height] = (char *)malloc(sizeof(char) * ((game->window_width / 42) + 1));
 	game->map[height] = (char *)malloc(1000);
@@ -106,7 +105,7 @@ void	map_init(char *map_file, t_game *game)
 {
 	int		fd;
 	char	*line;
-	size_t	height;
+	int	height;
 
 	// game->map = (char **)malloc(sizeof(char *) * ((game->window_height / 42) + 1));
 	game->map = (char **)malloc(1000);

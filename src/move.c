@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	update_map(t_game *game, size_t x, size_t y)
+void	update_map(t_game *game, int x, int y)
 {
 	t_image	img;
 

@@ -25,10 +25,17 @@
 #  include <X11/keysym.h>
 
 #  define ESC 65307
+
 #  define UP 119
 #  define DOWN 115
 #  define LEFT 97
 #  define RIGHT 100
+
+#  define UP_ARROW 65362
+#  define DOWN_ARROW 65364
+#  define LEFT_ARROW 65361
+#  define RIGHT_ARROW 65363
+
 # endif
 
 # define IMAGE_SIZE 42
@@ -41,9 +48,10 @@
 
 typedef struct s_player
 {
-	size_t	x;
-	size_t	y;
-	size_t	collectibles;
+	int	x;
+	int	y;
+	int		move_count;
+	int	collectibles;
 }				t_player;
 
 typedef struct s_game
@@ -51,9 +59,9 @@ typedef struct s_game
 	void		*mlx;
 	void		*window;
 	char		**map;
-	size_t		window_width;
-	size_t		window_height;
-	size_t		total_collectibles;
+	int		window_width;
+	int		window_height;
+	int		total_collectibles;
 	t_player	player;
 }				t_game;
 
@@ -70,7 +78,7 @@ void	put_message(char *error_message, char *message);
 
 void	window_init(t_game *game, char *map_file);
 
-void	*put_image(t_image img, size_t x, size_t y);
+void	*put_image(t_image img, int x, int y);
 
 void	map_init(char *map_file, t_game *game);
 

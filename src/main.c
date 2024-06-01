@@ -14,13 +14,13 @@ int	key_check(int keycode, t_game *game)
 	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		close_window(game);
-	if (keycode == UP)
+	if (keycode == UP || keycode == UP_ARROW)
 		up_player(game);
-	if (keycode == DOWN)
+	if (keycode == DOWN || keycode == DOWN_ARROW)
 		down_player(game);
-	if (keycode == LEFT)
+	if (keycode == LEFT || keycode == LEFT_ARROW)
 		left_player(game);
-	if (keycode == RIGHT)
+	if (keycode == RIGHT || keycode == RIGHT_ARROW)
 		right_player(game);
 	return (0);
 }
