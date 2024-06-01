@@ -24,6 +24,8 @@ void	up_player(t_game *game)
 	game->map[game->player.y - 1][game->player.x] = PLAYER;
 	game->map[game->player.y][game->player.x] = EMPTY;
 	game->player.y -= 1;
+	game->player.move_count++;
+	ft_printf("Move count: %d\n", game->player.move_count);
 	put_image(game, PLAYER, game->player.x, game->player.y);
 }
 
@@ -51,6 +53,8 @@ void	down_player(t_game *game)
 	game->map[game->player.y + 1][game->player.x] = PLAYER;
 	game->map[game->player.y][game->player.x] = EMPTY;
 	game->player.y += 1;
+	game->player.move_count++;
+	ft_printf("Move count: %d\n", game->player.move_count);
 	put_image(game, PLAYER, game->player.x, game->player.y);
 }
 
@@ -78,6 +82,8 @@ void	left_player(t_game *game)
 	game->map[game->player.y][game->player.x - 1] = PLAYER;
 	game->map[game->player.y][game->player.x] = EMPTY;
 	game->player.x -= 1;
+	game->player.move_count++;
+	ft_printf("Move count: %d\n", game->player.move_count);
 	put_image(game, PLAYER, game->player.x, game->player.y);
 }
 
@@ -105,5 +111,7 @@ void	right_player(t_game *game)
 	game->map[game->player.y][game->player.x + 1] = PLAYER;
 	game->map[game->player.y][game->player.x] = EMPTY;
 	game->player.x += 1;
+	game->player.move_count++;
+	ft_printf("Move count: %d\n", game->player.move_count);
 	put_image(game, PLAYER, game->player.x, game->player.y);
 }

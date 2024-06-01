@@ -11,7 +11,6 @@ int	close_window(t_game *game)
 
 int	key_check(int keycode, t_game *game)
 {
-	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		close_window(game);
 	if (keycode == UP || keycode == UP_ARROW)
@@ -30,11 +29,14 @@ void	game_init(t_game *game)
 	game->mlx = NULL;
 	game->window = NULL;
 	game->map = NULL;
+	game->map_width = 0;
+	game->map_height = 0;
 	game->window_width = 0;
 	game->window_height = 0;
 	game->total_collectibles = 0;
 	game->player.x = 0;
 	game->player.y = 0;
+	game->player.move_count = 0;
 	game->player.collectibles = 0;
 }
 
