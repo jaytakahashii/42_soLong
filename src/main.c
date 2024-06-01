@@ -11,7 +11,6 @@ int	close_window(t_game *game)
 
 int	key_check(int keycode, t_game *game)
 {
-	printf("Key code: %d\n", keycode);
 	if (keycode == ESC)
 		close_window(game);
 	if (keycode == UP)
