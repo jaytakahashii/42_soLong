@@ -3,10 +3,7 @@
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->window);
-	// mlx_destroy_display(game->mlx);
-	// free(game->mlx);
 	exit(0);
-	// return (0);
 }
 
 int	key_check(int keycode, t_game *game)
@@ -53,7 +50,5 @@ int	main(int ac, char **av)
 	mlx_hook(game.window, DestroyNotify, StructureNotifyMask, close_window, &game);
 	mlx_key_hook(game.window, key_check, &game);
 	mlx_loop(game.mlx);
-	// move player (right: D, left: A, up: W, down: S)
-	// mlx_key_hook(game.window, key_hook, &game);
 	return (0);
 }

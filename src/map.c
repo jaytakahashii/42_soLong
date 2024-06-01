@@ -1,15 +1,34 @@
 #include "so_long.h"
 
+static void	check_rectangular(int first_line_len, int line_len, t_game *game)
+{
+	if (first_line_len != line_len)
+		error_and_exit("Invalid map", "map width size is not rectangular", game);
+}
+
+static void	check_height(int height, t_game *game)
+{
+	if (height < 3)
+		error_and_exit("Invalid map", "map height size must be 2 or more", game);
+	if (height > MAX_HEIGHT_IMAGE)
+		error_and_exit("Invalid map", "map height size is too big", game);
+}
+
+static void check_width(int width, t_game *game)
+{
+	if (width < 3)
+		error_and_exit("Invalid map", "map width size must be 2 or more", game);
+	if (width > MAX_WIDTH_IMAGE)
+		error_and_exit("Invalid map", "map width size is too big", game);
+}
+
 static void	check_map(char **map, t_game *game)
 {
 	int		height;
 	int		width;
 	char	map_c;
 
-	if ((int)ft_strlen(map[0]) < 3)
-		error_and_exit("Invalid map", "map width size must be 2 or more", game);
-	if ((int)ft_strlen(map[0]) > MAX_WIDTH_IMAGE)
-		error_and_exit("Invalid map", "map width size is too big", game);
+	check_width((int)ft_strlen(map[0]), game);
 	height = 0;
 	while (map[height])
 	{
@@ -21,14 +40,10 @@ static void	check_map(char **map, t_game *game)
 				error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
 			width++;
 		}
-		if (width != (int)ft_strlen(map[0]))
-			error_and_exit("Invalid map", "map width size is not rectangular", game);
+		check_rectangular((int)ft_strlen(map[0]), width, game);
 		height++;
-		if (height > MAX_HEIGHT_IMAGE)
-			error_and_exit("Invalid map", "map height size is too big", game);
 	}
-	if (height < 3)
-		error_and_exit("Invalid map", "map height size must be 2 or more", game);
+	check_height(height, game);
 	game->window_width = width * IMAGE_SIZE;
 	game->window_height = height * IMAGE_SIZE;
 	game->map_width = width;
@@ -55,6 +70,111 @@ static void	get_map(int fd, t_game *game)
 	free(map_str);
 }
 
+bool	is_invalid(int x, int y, t_game *game)
+{
+	// check if out of map
+	if (x > 0 && y > 0 && x < game->map_width && y < game->map_height)
+	{
+		if (game->map[y][x] != WALL)
+			return (true);
+	}
+	return (false);
+}
+
+bool	bfs(t_player player, char target, t_game *game)
+{
+	int	visited[game->map_height][game->map_width];
+	int width;
+	int height;
+	int *queue;
+
+	// initialize visited
+	height = 0;
+	while (visited[height])
+	{
+		width = 0;
+		while (visited[height][width])
+		{
+			visited[height][width] = 0;
+			width++;
+		}
+		height++;
+	}
+	// initialize queue
+	queue = malloc(sizeof(int) * game->map_width * game->map_height);
+	if (!queue)
+		error_and_exit("Error: Malloc error", NULL, game);
+
+	// bfs
+	visited[player.y][player.x] = 1;
+	queue[0] = player.y;
+	queue[1] = player.x;
+	while (queue[0] != -1)
+	{
+		height = queue[0];
+		width = queue[1];
+		if (game->map[height][width] == target)
+		{
+			free(queue);
+			return (true);
+		}
+		if (is_invalid(width + 1, height, game) && visited[height][width + 1] == 0)
+		{
+			queue[0] = height;
+			queue[1] = width + 1;
+			visited[height][width + 1] = 1;
+		}
+		if (is_invalid(width - 1, height, game) && visited[height][width - 1] == 0)
+		{
+			queue[0] = height;
+			queue[1] = width - 1;
+			visited[height][width - 1] = 1;
+		}
+		if (is_invalid(width, height + 1, game) && visited[height + 1][width] == 0)
+		{
+			queue[0] = height + 1;
+			queue[1] = width;
+			visited[height + 1][width] = 1;
+		}
+		if (is_invalid(width, height - 1, game) && visited[height - 1][width] == 0)
+		{
+			queue[0] = height - 1;
+			queue[1] = width;
+			visited[height - 1][width] = 1;
+		}
+	}
+	free(queue);
+	return (false);
+}
+
+// check if can clear map bfs
+void	clear_check_map(char **map, t_game *game)
+{
+	int	height;
+	int	width;
+
+	height = 0;
+	while (map[height])
+	{
+		width = 0;
+		while (map[height][width])
+		{
+			if (map[height][width] == COLLECTIBLE)
+			{
+				if (bfs(game->player, COLLECTIBLE, game) == false)
+					error_and_exit("Invalid map", "collectible is not reachable", game);
+			}
+			if (map[height][width] == EXIT)
+			{
+				if (bfs(game->player, EXIT, game) == false)
+					error_and_exit("Invalid map", "exit is not reachable", game);
+			}
+			width++;
+		}
+		height++;
+	}
+}
+
 void	window_init(t_game *game, char *map_file_path)
 {
 	int	fd;
@@ -67,6 +187,7 @@ void	window_init(t_game *game, char *map_file_path)
 	get_map(fd, game);
 	close(fd);
 	check_map(game->map, game);
+	// clear_check_map(game->map, game);
 	game->mlx = mlx_init();
 	game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "so_long");
 }
