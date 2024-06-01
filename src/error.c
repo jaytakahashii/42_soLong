@@ -2,9 +2,10 @@
 
 void	error_handling(char *error_message, char *message, t_game *game)
 {
-	ft_printf("Error: %s\n", error_message);
+	ft_printf("Error: %s", error_message);
 	if (message)
-		ft_printf("%s\n", message);
+		ft_printf(" (%s)", message);
+	ft_printf("\n");
 	if (game)
 	{
 		mlx_destroy_window(game->mlx, game->window);

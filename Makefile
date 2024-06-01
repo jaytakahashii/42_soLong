@@ -87,7 +87,7 @@ fclean:
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@echo $(R) "<< $(NAME) fcleaning >>" $(X)
 	$(RM) $(OBJ_DIR)
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME_LINUX)
 	@echo "\n"
 
 re: fclean all
