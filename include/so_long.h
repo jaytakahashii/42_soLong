@@ -101,10 +101,9 @@ typedef struct s_stack
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
+	t_point	point;
 	int		move_count;
-	int	collectibles;
+	int		get_coin;
 }				t_player;
 
 typedef struct s_window
@@ -125,13 +124,8 @@ typedef struct s_map
 typedef struct s_game
 {
 	void		*mlx;
-	void		*window;
-	char		**map;
-	int		map_width;
-	int		map_height;
-	int		window_width;
-	int		window_height;
-	int		total_collectibles;
+	t_window	window;
+	t_map		map;
 	t_player	player;
 }				t_game;
 

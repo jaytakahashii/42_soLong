@@ -2,7 +2,7 @@
 
 int	close_window(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->window);
+	mlx_destroy_window(game->mlx, game->window.window);
 	exit(0);
 }
 
@@ -24,31 +24,31 @@ int	key_check(int keycode, t_game *game)
 void	game_init(t_game *game)
 {
 	game->mlx = NULL;
-	game->window = NULL;
-	game->map = NULL;
-	game->map_width = 0;
-	game->map_height = 0;
-	game->window_width = 0;
-	game->window_height = 0;
-	game->total_collectibles = 0;
-	game->player.x = 0;
-	game->player.y = 0;
+	game->window.window = NULL;
+	game->window.width = 0;
+	game->window.height = 0;
+	game->map.map = NULL;
+	game->map.width = 0;
+	game->map.height = 0;
+	game->map.total_coin = 0;
+	game->player.point.x = 0;
+	game->player.point.y = 0;
 	game->player.move_count = 0;
-	game->player.collectibles = 0;
+	game->player.get_coin = 0;
 }
 
 int	main(int ac, char **av)
 {
 	t_game	game;
 
-	game_init(&game);
 	if (ac != 2)
 		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
+	game_init(&game);
 	window_init(&game, av[1]);
 	map_init(&game);
 
-	mlx_hook(game.window, DestroyNotify, StructureNotifyMask, close_window, &game);
-	mlx_key_hook(game.window, key_check, &game);
+	mlx_hook(game.window.window, DestroyNotify, StructureNotifyMask, close_window, &game);
+	mlx_key_hook(game.window.window, key_check, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

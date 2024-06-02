@@ -2,11 +2,11 @@
 
 static bool	is_valid_point(t_game *game, t_point point)
 {
-	if (point.x < 1 || point.y < 1 || point.x >= game->map_width - 1 || point.y >= game->map_height - 1)
+	if (point.x < 1 || point.y < 1 || point.x >= game->map.width - 1 || point.y >= game->map.height - 1)
 	{
 		return (false);
 	}
-	if (game->map[point.y][point.x] == WALL)
+	if (game->map.map[point.y][point.x] == WALL)
 	{
 		return (false);
 	}
@@ -49,7 +49,7 @@ bool	dfs(t_game *game, t_point player, char target)
 	t_point current;
 	t_point	next;
 	int		direction[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-	int		visited[game->map_height][game->map_width];
+	int		visited[game->map.height][game->map.width];
 	int		i;
 
 	ft_memset(visited, 0, sizeof(visited));
@@ -64,7 +64,7 @@ bool	dfs(t_game *game, t_point player, char target)
 	while (stack.top != NULL)
 	{
 		current = stack.top->point;
-		if (game->map[current.y][current.x] == target)
+		if (game->map.map[current.y][current.x] == target)
 		{
 			free_stack(&stack);
 			return (true);
