@@ -107,6 +107,21 @@ typedef struct s_player
 	int	collectibles;
 }				t_player;
 
+typedef struct s_window
+{
+	void	*window;
+	int		width;
+	int		height;
+}				t_window;
+
+typedef struct s_map
+{
+	char	**map;
+	int		width;
+	int		height;
+	int		total_coin;
+}				t_map;
+
 typedef struct s_game
 {
 	void		*mlx;
