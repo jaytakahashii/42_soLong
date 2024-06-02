@@ -86,11 +86,18 @@ typedef struct	s_point
 	int	y;
 }				t_point;
 
+typedef struct s_node
+{
+	t_point	point;
+	struct s_node	*next;
+}				t_node;
+
+
 typedef struct s_stack
 {
-	t_point *point;
-	struct s_stack *next;
+	t_node *top;
 }				t_stack;
+
 
 typedef struct s_player
 {

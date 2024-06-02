@@ -13,62 +13,89 @@ static bool	is_valid_point(t_game *game, t_point point)
 	return (true);
 }
 
-void	ft_lstremove_front(t_list **lst)
+static void	push(t_stack *stack, t_node *node)
 {
-	t_list	*tmp;
+	node->next = stack->top;
+	stack->top = node;
+}
 
-	if (!lst || !*lst)
-		return ;
-	tmp = *lst;
-	*lst = tmp->next;
-	free(tmp);
+static t_node	*pop(t_stack *stack)
+{
+	t_node	*node;
+
+	if (stack->top == NULL)
+		return (NULL);
+	node = stack->top;
+	stack->top = stack->top->next;
+	return (node);
+}
+
+static void	free_stack(t_stack *stack)
+{
+	t_node	*node;
+
+	while (stack->top != NULL)
+	{
+		node = pop(stack);
+		free(node);
+	}
 }
 
 bool	dfs(t_game *game, t_point player, char target)
 {
-	int	visited[game->map_height][game->map_width];
-	int	directions[4][2] = {{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
+	t_stack	stack;
+	t_node	*node;
+	t_point	point;
+	t_point current;
 	t_point	next;
-	t_list	*stack;
-	int	i;
+	int		direction[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+	int		visited[game->map_height][game->map_width];
+	int		i;
 
-	i = 0;
-	while (i < game->map_height)
-	{
-		ft_memset(visited[i], 0, game->map_width * sizeof(int));
-		i++;
-	}
-	stack = ft_lstnew(&player);
+	ft_memset(visited, 0, sizeof(visited));
+	stack.top = NULL;
+	node = (t_node *)malloc(sizeof(t_node));
+	if (node == NULL)
+		error_and_exit("Memory allocation error", "failed to allocate memory", game);
+	node->point = player;
+	node->next = NULL;
+	push(&stack, node);
 	visited[player.y][player.x] = 1;
-
-	while (stack)
+	while (stack.top != NULL)
 	{
-		player = *(t_point *)stack->content;
-		if (game->map[player.y][player.x] == target)
+		current = stack.top->point;
+		printf("current: %d %d\n", current.x, current.y);
+		if (game->map[current.y][current.x] == target)
+		{
+			free_stack(&stack);
 			return (true);
+		}
 		i = 0;
 		while (i < 4)
 		{
-			printf("first stack->content.x: %d, stack->content.y: %d\n", ((t_point *)stack->content)->x, ((t_point *)stack->content)->y);
-			next.x = player.x + directions[i][0];
-			next.y = player.y + directions[i][1];
-			printf("next.x: %d, next.y: %d\n", next.x, next.y);
-			printf("first stack->content.x: %d, stack->content.y: %d\n", ((t_point *)stack->content)->x, ((t_point *)stack->content)->y);
+			next.x = current.x + direction[i][0];
+			next.y = current.y + direction[i][1];
 			if (is_valid_point(game, next) && !visited[next.y][next.x])
 			{
-				printf("OK\n");
-				ft_lstadd_front(&stack, ft_lstnew(&next));
+				printf("next: %d %d\n", next.x, next.y);
+				point = next;
+				node = (t_node *)malloc(sizeof(t_node));
+				if (node == NULL)
+					error_and_exit("Memory allocation error", "failed to allocate memory", game);
+				node->point = point;
+				node->next = NULL;
+				push(&stack, node);
 				visited[next.y][next.x] = 1;
-				break ;
+				break;
 			}
-			printf("first stack->content.x: %d, stack->content.y: %d\n", ((t_point *)stack->content)->x, ((t_point *)stack->content)->y);
 			i++;
 		}
 		if (i == 4)
 		{
-			ft_lstremove_front(&stack);
-			printf("\nKO\n");
+			node = pop(&stack);
+			free(node);
 		}
 	}
+	free_stack(&stack);
 	return (false);
 }
