@@ -62,6 +62,11 @@
 # define EXIT_PATH "textures/only_piich_42.xpm"
 # define PLAYER_PATH "textures/only_mario_42.xpm"
 
+typedef struct	s_point
+{
+	int	x;
+	int	y;
+}				t_point;
 typedef struct s_player
 {
 	int	x;
