@@ -37,14 +37,29 @@ void	game_init(t_game *game)
 	game->player.get_coin = 0;
 }
 
+int	get_fd(char *map_file_path, t_game *game)
+{
+	int	fd;
+
+	fd = open(map_file_path, O_RDONLY);
+	if (fd < 0)
+		error_and_exit("Invalid map file", "failed to open map file", game);
+	if (ft_strnstr(map_file_path, ".ber", ft_strlen(map_file_path)) == NULL)
+		error_and_exit("Invalid map file", "file extension must be .ber", game);
+	return (fd);
+}
+
+
 int	main(int ac, char **av)
 {
 	t_game	game;
+	int		fd;
 
 	if (ac != 2)
 		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
 	game_init(&game);
-	window_init(&game, av[1]);
+	fd = get_fd(av[1], &game);
+	window_init(&game, fd);
 	map_init(&game);
 
 	mlx_hook(game.window.window, DestroyNotify, StructureNotifyMask, close_window, &game);

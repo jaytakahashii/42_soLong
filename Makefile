@@ -21,9 +21,10 @@ SRC_FILES = main.c\
 			map.c\
 			image.c\
 			error.c\
-			get_next_str.c\
 			move.c\
-			deepth_first_search.c
+			deepth_first_search.c\
+			window.c\
+			map_check.c\
 
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
