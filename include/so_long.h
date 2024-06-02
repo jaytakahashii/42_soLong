@@ -120,13 +120,6 @@ typedef struct s_game
 	t_player	player;
 }				t_game;
 
-// typedef struct s_image
-// {
-// 	void	*path;
-// 	t_game	*game;
-// 	void	*img;
-// }				t_image;
-
 void	error_and_exit(char *error_message, char *message, t_game *game);
 
 void	put_message(char *error_message, char *message);
