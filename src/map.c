@@ -11,7 +11,9 @@ static void	check_height(int height, t_game *game)
 	if (height < 3)
 		error_and_exit("Invalid map", "map height size must be 2 or more", game);
 	if (height > MAX_HEIGHT_IMAGE)
+	{
 		error_and_exit("Invalid map", "map height size is too big", game);
+	}
 }
 
 static void check_width(int width, t_game *game)
@@ -19,7 +21,9 @@ static void check_width(int width, t_game *game)
 	if (width < 3)
 		error_and_exit("Invalid map", "map width size must be 2 or more", game);
 	if (width > MAX_WIDTH_IMAGE)
+	{
 		error_and_exit("Invalid map", "map width size is too big", game);
+	}
 }
 
 static int	strlen_double_ptr(char **str)

@@ -17,6 +17,24 @@
 #  define DOWN 1
 #  define LEFT 0
 #  define RIGHT 2
+
+#  define UP_ARROW 126
+#  define DOWN_ARROW 125
+#  define LEFT_ARROW 123
+#  define RIGHT_ARROW 124
+
+#  define MAX_WIDTH 2560
+#  define MAX_HEIGHT 1400
+
+#  define MAX_WIDTH_IMAGE 60
+#  define MAX_HEIGHT_IMAGE 33
+#  define MAX_IMAGE 1980
+#  define MAX_READ_SIZE 2970
+
+#  define READ_SIZE 3000
+
+#  define DestroyNotify 17
+#  define StructureNotifyMask 131072
 # endif
 
 # ifdef __linux__

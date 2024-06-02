@@ -5,6 +5,7 @@ void	put_image(t_game *game, char map_c, int x, int y)
 	void	*img;
 	int 	image_size;
 
+	img = NULL;
 	image_size = IMAGE_SIZE;
 	if (map_c == EMPTY)
 		img = mlx_xpm_file_to_image(game->mlx, "./textures/empty_42.xpm", &image_size, &image_size);

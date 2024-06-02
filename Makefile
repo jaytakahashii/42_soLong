@@ -9,7 +9,7 @@ SRC_DIR = src/
 OBJ_DIR = .obj/
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-MLX_MAC_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit
+MLX_MAC_FLAGS = -l mlx -framework OpenGL -framework AppKit
 MLX_LINUX_FLAGS = -lmlx_Linux -lXext -lX11
 
 AR = ar
