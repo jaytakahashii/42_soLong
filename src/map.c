@@ -36,7 +36,21 @@ static int	strlen_double_ptr(char **str)
 	return len;
 }
 
-static void	check_map(char **map, t_game *game)
+bool	is_outer_wall(int x, int y, t_game *game)
+{
+	if (x == 0 || y == 0 || x == game->map_width - 1 || y == game->map_height - 1)
+		return true;
+	return false;
+}
+
+bool	is_valid_char(char c)
+{
+	if (c == EMPTY || c == WALL || c == COLLECTIBLE || c == EXIT || c == PLAYER)
+		return true;
+	return false;
+}
+
+static void	check_map_char(char **map, t_game *game)
 {
 	int		height;
 	int		width;
@@ -52,9 +66,9 @@ static void	check_map(char **map, t_game *game)
 		while (map[height][++width])
 		{
 			map_c = map[height][width];
-			if ((height == 0 || height == game->map_height - 1 || width == 0 || width == game->map_width - 1) && map_c != WALL)
+			if (is_outer_wall(width, height, game) && map_c != WALL)
 				error_and_exit("Invalid map", "map must be closed/surrounded by walls.", game);
-			if (map_c != EMPTY && map_c != WALL && map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
+			if (!is_valid_char(map_c))
 				error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
 			if (map_c == PLAYER)
 			{
@@ -64,7 +78,7 @@ static void	check_map(char **map, t_game *game)
 			if (map_c == COLLECTIBLE)
 				game->total_collectibles++;
 		}
-		check_rectangular((int)ft_strlen(map[0]), width, game);
+		check_rectangular(game->map_width, width, game);
 	}
 	check_height(height, game);
 	game->window_width = width * IMAGE_SIZE;
@@ -82,7 +96,7 @@ static void	get_map(int fd, t_game *game)
 	read_bytes = read(fd, map_str, READ_SIZE);
 	if (read_bytes < 0)
 		error_and_exit("Error: Read error", NULL, game);
-	if (read_bytes >= MAX_READ_SIZE)
+	if (read_bytes > MAX_READ_SIZE)
 		error_and_exit("Error: Map is too big", NULL, game);
 	map_str[read_bytes] = '\0';
 	game->map = ft_split(map_str, '\n');
@@ -99,12 +113,10 @@ void	clear_check_map(t_game *game)
 	can_get_coin = 0;
 	while (can_get_coin < game->total_collectibles)
 	{
-		printf("COLLECTIBLE\n\n");
 		if (dfs(game, (t_point){game->player.x, game->player.y}, COLLECTIBLE) == false)
 			error_and_exit("Invalid map", "collectible is not reachable", game);
 		can_get_coin++;
 	}
-	printf("\nEXIT\n\n");
 	if (dfs(game, (t_point){game->player.x, game->player.y}, EXIT) == false)
 		error_and_exit("Invalid map", "exit is not reachable", game);
 }
@@ -120,7 +132,7 @@ void	window_init(t_game *game, char *map_file_path)
 		error_and_exit("Invalid map file", "file extension must be .ber", game);
 	get_map(fd, game);
 	close(fd);
-	check_map(game->map, game);
+	check_map_char(game->map, game);
 	clear_check_map(game);
 	game->mlx = mlx_init();
 	game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "so_long");

@@ -64,7 +64,6 @@ bool	dfs(t_game *game, t_point player, char target)
 	while (stack.top != NULL)
 	{
 		current = stack.top->point;
-		printf("current: %d %d\n", current.x, current.y);
 		if (game->map[current.y][current.x] == target)
 		{
 			free_stack(&stack);
@@ -77,7 +76,6 @@ bool	dfs(t_game *game, t_point player, char target)
 			next.y = current.y + direction[i][1];
 			if (is_valid_point(game, next) && !visited[next.y][next.x])
 			{
-				printf("next: %d %d\n", next.x, next.y);
 				point = next;
 				node = (t_node *)malloc(sizeof(t_node));
 				if (node == NULL)
