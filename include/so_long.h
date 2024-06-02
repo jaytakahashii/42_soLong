@@ -133,7 +133,7 @@ void	error_and_exit(char *error_message, char *message, t_game *game);
 
 void	put_message(char *error_message, char *message);
 
-void	window_init(t_game *game, int fd);
+void	window_init(t_game *game);
 
 void 	put_image(t_game *game, char map_c, int x, int y);
 
@@ -153,4 +153,6 @@ bool	dfs(t_game *game, t_point player, char target);
 
 void	check_map_char(char **map, t_game *game);
 void	clear_check_map(t_game *game);
+char	**get_map(int fd, t_game *game);
+void	check_map(char **map, t_game *game);
 #endif

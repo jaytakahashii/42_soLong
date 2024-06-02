@@ -85,3 +85,9 @@ void	check_map_char(char **map, t_game *game)
 	game->window.width = width * IMAGE_SIZE;
 	game->window.height = height * IMAGE_SIZE;
 }
+
+void	check_map(char **map, t_game *game)
+{
+	check_map_char(map, game);
+	clear_check_map(game);
+}
