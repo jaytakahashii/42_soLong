@@ -3,7 +3,7 @@
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->window.window);
-	exit(0);
+	return (0);
 }
 
 int	key_check(int keycode, t_game *game)
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 	fd = get_fd(av[1], &game);
 	game.map.map = get_map(fd, &game);
 	check_map(game.map.map, &game);
-	window_init(&game, game.map.map);
+	window_init(&game);
 	map_init(&game);
 
 	mlx_hook(game.window.window, DestroyNotify, StructureNotifyMask, close_window, &game);
