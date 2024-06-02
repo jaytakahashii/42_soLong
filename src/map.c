@@ -56,6 +56,13 @@ static void	check_map(char **map, t_game *game)
 				error_and_exit("Invalid map", "map must be closed/surrounded by walls.", game);
 			if (map_c != EMPTY && map_c != WALL && map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
 				error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
+			if (map_c == PLAYER)
+			{
+				game->player.x = width;
+				game->player.y = height;
+			}
+			if (map_c == COLLECTIBLE)
+				game->total_collectibles++;
 		}
 		check_rectangular((int)ft_strlen(map[0]), width, game);
 	}
@@ -85,9 +92,22 @@ static void	get_map(int fd, t_game *game)
 }
 
 // check if can clear map dfs
-// void	clear_check_map(char **map, t_game *game)
-// {
-// }
+void	clear_check_map(t_game *game)
+{
+	int		can_get_coin;
+
+	can_get_coin = 0;
+	while (can_get_coin < game->total_collectibles)
+	{
+		printf("COLLECTIBLE\n\n");
+		if (dfs(game, (t_point){game->player.x, game->player.y}, COLLECTIBLE) == false)
+			error_and_exit("Invalid map", "collectible is not reachable", game);
+		can_get_coin++;
+	}
+	printf("\nEXIT\n\n");
+	if (dfs(game, (t_point){game->player.x, game->player.y}, EXIT) == false)
+		error_and_exit("Invalid map", "exit is not reachable", game);
+}
 
 void	window_init(t_game *game, char *map_file_path)
 {
@@ -101,7 +121,7 @@ void	window_init(t_game *game, char *map_file_path)
 	get_map(fd, game);
 	close(fd);
 	check_map(game->map, game);
-	// clear_check_map(game->map, game);
+	clear_check_map(game);
 	game->mlx = mlx_init();
 	game->window = mlx_new_window(game->mlx, game->window_width, game->window_height, "so_long");
 }
@@ -117,13 +137,13 @@ void	map_init(t_game *game)
 		width = 0;
 		while (width < game->map_width)
 		{
-			if (game->map[height][width] == PLAYER)
-			{
-				game->player.x = width;
-				game->player.y = height;
-			}
-			if (game->map[height][width] == COLLECTIBLE)
-				game->total_collectibles++;
+			// if (game->map[height][width] == PLAYER)
+			// {
+			// 	game->player.x = width;
+			// 	game->player.y = height;
+			// }
+			// if (game->map[height][width] == COLLECTIBLE)
+			// 	game->total_collectibles++;
 			put_image(game, game->map[height][width], width, height);
 			width++;
 		}

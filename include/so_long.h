@@ -85,6 +85,13 @@ typedef struct	s_point
 	int	x;
 	int	y;
 }				t_point;
+
+typedef struct s_stack
+{
+	t_point *point;
+	struct s_stack *next;
+}				t_stack;
+
 typedef struct s_player
 {
 	int	x;
@@ -132,5 +139,7 @@ void 	right_player(t_game *game);
 
 
 int		close_window(t_game *game);
+
+bool	dfs(t_game *game, t_point player, char target);
 
 #endif
