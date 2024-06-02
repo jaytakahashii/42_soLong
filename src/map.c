@@ -149,13 +149,6 @@ void	map_init(t_game *game)
 		width = 0;
 		while (width < game->map_width)
 		{
-			// if (game->map[height][width] == PLAYER)
-			// {
-			// 	game->player.x = width;
-			// 	game->player.y = height;
-			// }
-			// if (game->map[height][width] == COLLECTIBLE)
-			// 	game->total_collectibles++;
 			put_image(game, game->map[height][width], width, height);
 			width++;
 		}
