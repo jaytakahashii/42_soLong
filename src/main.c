@@ -37,6 +37,25 @@ void	game_init(t_game *game)
 	game->player.get_coin = 0;
 }
 
+bool	diff_extension(char *file_name, char *ext)
+{
+	int	file_len;
+	int	ext_len;
+
+	file_len = ft_strlen(file_name);
+	ext_len = ft_strlen(ext);
+	if (file_len < ext_len)
+		return (false);
+	while (ext_len > 0)
+	{
+		if (file_name[file_len - 1] != ext[ext_len - 1])
+			return (false);
+		file_len--;
+		ext_len--;
+	}
+	return (true);
+}
+
 int	get_fd(char *map_file_path, t_game *game)
 {
 	int	fd;
@@ -44,7 +63,7 @@ int	get_fd(char *map_file_path, t_game *game)
 	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
 		error_and_exit("Invalid map file", "failed to open map file", game);
-	if (ft_strnstr(map_file_path, ".ber", ft_strlen(map_file_path)) == NULL)
+	if (diff_extension(map_file_path, ".ber") == false)
 		error_and_exit("Invalid map file", "file extension must be .ber", game);
 	return (fd);
 }
