@@ -24,7 +24,6 @@ int	key_check(int keycode, t_game *game)
 void	game_init(t_game *game)
 {
 	game->mlx = NULL;
-	game->window.is_open = false;
 	game->window.win_ptr = NULL;
 	game->window.width = 0;
 	game->window.height = 0;

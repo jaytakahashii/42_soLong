@@ -108,7 +108,6 @@ typedef struct s_player
 
 typedef struct s_window
 {
-	bool	is_open;
 	void	*win_ptr;
 	int		width;
 	int		height;
