@@ -1,14 +1,18 @@
 #include "so_long.h"
 
-static bool	is_valid_point(t_game *game, t_point point)
+static bool	is_valid_point(t_game *game, t_point point, char target)
 {
 	if (point.x < 1 || point.y < 1 || point.x >= game->map.width - 1 || point.y >= game->map.height - 1)
-	{
 		return (false);
+	if (target == COLLECTIBLE)
+	{
+		if (game->map.map_str[point.y][point.x] == WALL || game->map.map_str[point.y][point.x] == EXIT)
+			return (false);
 	}
-	if (game->map.map_str[point.y][point.x] == WALL)
+	else if (target == EXIT)
 	{
-		return (false);
+		if (game->map.map_str[point.y][point.x] == WALL)
+			return (false);
 	}
 	return (true);
 }
@@ -74,7 +78,7 @@ bool	dfs(t_game *game, t_point player, char target)
 		{
 			next.x = current.x + direction[i][0];
 			next.y = current.y + direction[i][1];
-			if (is_valid_point(game, next) && !visited[next.y][next.x])
+			if (is_valid_point(game, next, target) && !visited[next.y][next.x])
 			{
 				point = next;
 				node = (t_node *)malloc(sizeof(t_node));

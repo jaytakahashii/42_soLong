@@ -56,11 +56,15 @@ void	basic_map_check(char **map, t_game *game)
 	int		height;
 	int		width;
 	char	map_c;
+	int		exit_count;
+	int		player_count;
 
 	game->map.height = strlen_double_ptr(map);
 	game->map.width = (int)ft_strlen(map[0]);
 	check_width(game->map.width, game);
 	height = -1;
+	exit_count = 0;
+	player_count = 0;
 	while (map[++height])
 	{
 		width = -1;
@@ -73,14 +77,21 @@ void	basic_map_check(char **map, t_game *game)
 				error_and_exit("Invalid map", "map must contain only 0, 1, C, E, and P", game);
 			if (map_c == PLAYER)
 			{
+				player_count++;
 				game->player.point.x = width;
 				game->player.point.y = height;
+				if (player_count > 1)
+					error_and_exit("Invalid map", "map must contain only one player", game);
 			}
 			if (map_c == COLLECTIBLE)
 				game->map.total_coin++;
+			if (map_c == EXIT)
+				exit_count++;
 		}
 		check_rectangular(game->map.width, width, game);
 	}
+	if (exit_count == 0 || game->map.total_coin == 0)
+		error_and_exit("Invalid map", "map must contain at least one exit and one collectible", game);
 	check_height(height, game);
 	game->window.width = width * IMAGE_SIZE;
 	game->window.height = height * IMAGE_SIZE;
