@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:20:25 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:24:31 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ bool	is_target(t_game *game,
 	{
 		if ((*can_get_coin) == 0 || target == EXIT)
 		{
-			printf("true\n");
 			free_stack(stack);
 			return (true);
 		}

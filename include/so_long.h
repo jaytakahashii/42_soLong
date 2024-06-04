@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:12:42 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:23:39 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,63 +29,51 @@
 #  define DOWN 1
 #  define LEFT 0
 #  define RIGHT 2
-
 #  define UP_ARROW 126
 #  define DOWN_ARROW 125
 #  define LEFT_ARROW 123
 #  define RIGHT_ARROW 124
-
 #  define MAX_WIDTH 2560
 #  define MAX_HEIGHT 1400
-
 #  define MAX_WIDTH_IMAGE 60
 #  define MAX_HEIGHT_IMAGE 33
 #  define MAX_IMAGE 1980
 #  define MAX_READ_SIZE 2970
-
 #  define READ_SIZE 3000
-
 #  define DESTROYNOTIFY 17
-#  define STRUCTURENOTIFYMASK 1L << 17
+#  define STRUCTURENOTIFYMASK 131072
 # endif
 
 # ifdef __linux__
 #  include <stdio.h>
 #  include <X11/X.h>
 #  include <X11/keysym.h>
-
 #  define ESC 65307
-
 #  define UP 119
 #  define DOWN 115
 #  define LEFT 97
 #  define RIGHT 100
-
 #  define UP_ARROW 65362
 #  define DOWN_ARROW 65364
 #  define LEFT_ARROW 65361
 #  define RIGHT_ARROW 65363
-
 #  define MAX_WIDTH 1920
 #  define MAX_HEIGHT 1080
-
 #  define MAX_WIDTH_IMAGE 45
 #  define MAX_HEIGHT_IMAGE 25
 #  define MAX_IMAGE 1125
 #  define MAX_READ_SIZE 1688
-
 #  define READ_SIZE 2000
-
+#  define DESTROYNOTIFY DestroyNotify
+#  define STRUCTURENOTIFYMASK StructureNotifyMask
 # endif
 
 # define IMAGE_SIZE 42
-
 # define EMPTY '0'
 # define WALL '1'
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
-
 # define EMPTY_PATH "textures/empty_42.xpm"
 # define WALL_PATH "textures/only_wall_42.xpm"
 # define COLLECTIBLE_PATH "textures/only_coin_42.xpm"
