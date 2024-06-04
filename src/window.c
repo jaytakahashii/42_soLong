@@ -26,5 +26,5 @@ char	**get_map(int fd, t_game *game)
 void	window_init(t_game *game)
 {
 	game->mlx = mlx_init();
-	game->window.window = mlx_new_window(game->mlx, game->window.width, game->window.height, "so_long");
+	game->window.win_ptr = mlx_new_window(game->mlx, game->window.width, game->window.height, "so_long");
 }

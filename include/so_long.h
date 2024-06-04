@@ -108,7 +108,7 @@ typedef struct s_player
 
 typedef struct s_window
 {
-	void	*window;
+	void	*win_ptr;
 	int		width;
 	int		height;
 }				t_window;
