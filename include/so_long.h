@@ -151,8 +151,8 @@ int		close_window(t_game *game);
 
 bool	dfs(t_game *game, t_point player, char target);
 
-void	check_map_char(char **map, t_game *game);
-void	clear_check_map(t_game *game);
+void	basic_map_check(char **map, t_game *game);
+void	clear_check(t_game *game);
 char	**get_map(int fd, t_game *game);
 void	check_map(char **map, t_game *game);
 #endif

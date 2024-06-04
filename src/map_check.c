@@ -51,7 +51,7 @@ bool	is_valid_char(char c)
 	return false;
 }
 
-void	check_map_char(char **map, t_game *game)
+void	basic_map_check(char **map, t_game *game)
 {
 	int		height;
 	int		width;
@@ -88,6 +88,6 @@ void	check_map_char(char **map, t_game *game)
 
 void	check_map(char **map, t_game *game)
 {
-	check_map_char(map, game);
-	clear_check_map(game);
+	basic_map_check(map, game);
+	clear_check(game);
 }

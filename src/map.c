@@ -1,7 +1,6 @@
 #include "so_long.h"
 
-// check if can clear map dfs
-void	clear_check_map(t_game *game)
+void	clear_check(t_game *game)
 {
 	int		can_get_coin;
 
