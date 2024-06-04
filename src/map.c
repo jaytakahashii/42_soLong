@@ -7,11 +7,11 @@ void	clear_check(t_game *game)
 	can_get_coin = 0;
 	while (can_get_coin < game->map.total_coin)
 	{
-		if (dfs(game, game->player.point, COLLECTIBLE) == false)
+		if (dfs(game, game->player.point, COLLECTIBLE, can_get_coin) == false)
 			error_and_exit("Invalid map", "collectible is not reachable", game);
 		can_get_coin++;
 	}
-	if (dfs(game, game->player.point, EXIT) == false)
+	if (dfs(game, game->player.point, EXIT, can_get_coin) == false)
 		error_and_exit("Invalid map", "exit is not reachable", game);
 }
 

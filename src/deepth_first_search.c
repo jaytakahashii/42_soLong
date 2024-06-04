@@ -45,7 +45,7 @@ static void	free_stack(t_stack *stack)
 	}
 }
 
-bool	dfs(t_game *game, t_point player, char target)
+bool	dfs(t_game *game, t_point player, char target, int can_get_coin)
 {
 	t_stack	stack;
 	t_node	*node;
@@ -70,8 +70,12 @@ bool	dfs(t_game *game, t_point player, char target)
 		current = stack.top->point;
 		if (game->map.map_str[current.y][current.x] == target)
 		{
-			free_stack(&stack);
-			return (true);
+			if (can_get_coin == 0 || target == EXIT)
+			{
+				free_stack(&stack);
+				return (true);
+			}
+			can_get_coin--;
 		}
 		i = 0;
 		while (i < 4)

@@ -147,7 +147,7 @@ void 	right_player(t_game *game);
 
 int		close_window(t_game *game);
 
-bool	dfs(t_game *game, t_point player, char target);
+bool	dfs(t_game *game, t_point player, char target, int can_get_coin);
 
 void	basic_map_check(char **map, t_game *game);
 void	clear_check(t_game *game);
