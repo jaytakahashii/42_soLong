@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:31 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:05:14 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:35:45 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	put_image(t_game *game, char map_c, int x, int y)
 	else if (map_c == WALL)
 		img = mlx_xpm_file_to_image(game->mlx,
 				"./textures/only_wall_42.xpm", &image_size, &image_size);
-	else if (map_c == COLLECTIBLE)
+	else if (map_c == CAN_GET_COIN)
 		img = mlx_xpm_file_to_image(game->mlx,
 				"./textures/only_coin_42.xpm", &image_size, &image_size);
 	else if (map_c == EXIT)

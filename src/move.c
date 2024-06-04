@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:47 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 17:49:48 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:38:25 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	repleace_map(t_game *game, int x, int y, int up_down, int left_right)
 {
-	if (game->map.map_str[y - up_down][x - left_right] == COLLECTIBLE)
+	if (game->map.map_str[y - up_down][x - left_right] == CAN_GET_COIN)
 		game->player.get_coin += 1;
 	put_image(game, EMPTY, x, y);
 	game->map.map_str[y - up_down][x - left_right] = PLAYER;

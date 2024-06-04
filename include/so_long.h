@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:27:32 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:35:09 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
+# define CAN_GET_COIN 'G'
 # define EMPTY_PATH "textures/empty_42.xpm"
 # define WALL_PATH "textures/only_wall_42.xpm"
 # define COLLECTIBLE_PATH "textures/only_coin_42.xpm"
@@ -149,7 +150,7 @@ void	right_player(t_game *game);
 
 int		close_window(t_game *game);
 
-bool	dfs(t_game *game, t_point player, char target, int can_get_coin);
+bool	dfs(t_game *game, t_point player, char target);
 
 void	clear_check(t_game *game);
 char	**get_map(int fd, t_game *game);
@@ -170,8 +171,8 @@ t_node	*init_node(t_point point);
 void	add_player(t_game *game, int x, int y, char map_c);
 
 bool	is_valid_point(t_game *game, t_point point, char target);
-bool	is_target(t_game *game, t_point player, char target,
-			int *can_get_coin, t_stack *stack);
+bool	is_target(t_game *game, t_point player,
+			char target, t_stack *stack);
 int		**basic_vector(int i, int **direction);
 int		strlen_double_ptr(char **str);
 

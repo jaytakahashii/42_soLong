@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:44 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:52:29 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:37:09 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ void	clear_check(t_game *game)
 	can_get_coin = 0;
 	while (can_get_coin < game->map.total_coin)
 	{
-		printf("can_get_coin: %d\n", can_get_coin);
-		if (dfs(game, game->player.point, COLLECTIBLE, can_get_coin) == false)
+		if (dfs(game, game->player.point, COLLECTIBLE) == false)
 			error_and_exit("Invalid map", "collectible is not reachable", game);
 		can_get_coin++;
 	}
-	if (dfs(game, game->player.point, EXIT, can_get_coin) == false)
+	if (dfs(game, game->player.point, EXIT) == false)
 		error_and_exit("Invalid map", "exit is not reachable", game);
 }
 
