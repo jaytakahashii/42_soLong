@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:20:30 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:52:13 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ bool	dfs(t_game *game, t_point player, char target, int can_get_coin)
 	while (stack.top != NULL)
 	{
 		current = stack.top->point;
+		printf("current: %d, %d\n", current.x, current.y);
 		if (is_target(game, current, target, &can_get_coin, &stack))
 			return (true);
 		i = register_direction(game, &stack, visited, current, target);
