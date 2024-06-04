@@ -55,9 +55,9 @@ int	main(int ac, char **av)
 	t_game	game;
 	int		fd;
 
+	game_init(&game);
 	if (ac != 2)
 		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
-	game_init(&game);
 	fd = get_fd(av[1], &game);
 	game.map.map = get_map(fd, &game);
 	check_map(game.map.map, &game);
