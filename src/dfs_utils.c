@@ -6,7 +6,7 @@
 /*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:34:41 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 02:49:33 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,13 @@ bool	is_valid_point(t_game *game, t_point point, char target)
 	return (true);
 }
 
-bool	is_target(t_game *game,
-			t_point player,
-			char target,
-			t_stack *stack)
+bool	is_target(t_game *game, char target, t_dfs *dfs)
 {
-	if (game->map.map_str[player.y][player.x] == target)
+	if (game->map.map_str[dfs->current.y][dfs->current.x] == target)
 	{
 		if (target == COLLECTIBLE)
-			game->map.map_str[player.y][player.x] = CAN_GET_COIN;
-		free_stack(stack);
+			game->map.map_str[dfs->current.y][dfs->current.x] = CAN_GET_COIN;
+		free_stack(&dfs->stack);
 		return (true);
 	}
 	return (false);

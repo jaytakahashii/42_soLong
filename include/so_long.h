@@ -6,7 +6,7 @@
 /*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:35:09 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 02:51:52 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,14 @@ typedef struct s_map
 	int		exit_count;
 }				t_map;
 
+typedef struct s_dfs
+{
+	t_stack	stack;
+	t_point	current;
+	int		**visited;
+	int		**direction;
+}				t_dfs;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -171,8 +179,7 @@ t_node	*init_node(t_point point);
 void	add_player(t_game *game, int x, int y, char map_c);
 
 bool	is_valid_point(t_game *game, t_point point, char target);
-bool	is_target(t_game *game, t_point player,
-			char target, t_stack *stack);
+bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
 int		strlen_double_ptr(char **str);
 

@@ -6,7 +6,7 @@
 /*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:36:57 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 02:50:22 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	**init_direction(void)
 	return (direction);
 }
 
-void	register_next(t_game *game, t_stack *stack, int **visited, t_point next)
+void	register_next(t_game *game, t_point next, t_dfs *dfs)
 {
 	t_node	*node;
 	t_point	tmp;
@@ -45,34 +45,29 @@ void	register_next(t_game *game, t_stack *stack, int **visited, t_point next)
 			game);
 	node->point = tmp;
 	node->next = NULL;
-	push(stack, node);
-	visited[next.y][next.x] = 1;
+	push(&dfs->stack, node);
+	dfs->visited[next.y][next.x] = 1;
 }
 
-int	register_direction(t_game *game,
-		t_stack *stack,
-		int **visited,
-		t_point current,
-		char target)
+int	register_direction(t_game *game, char target, t_dfs *dfs)
 {
 	t_point	next;
-	int		**direction;
 	int		i;
 
 	i = 0;
-	direction = init_direction();
+	dfs->direction = init_direction();
 	while (i < 4)
 	{
-		next = (t_point){current.x + direction[i][0],
-			current.y + direction[i][1]};
-		if (is_valid_point(game, next, target) && !visited[next.y][next.x])
+		next = (t_point){dfs->current.x + dfs->direction[i][0],
+			dfs->current.y + dfs->direction[i][1]};
+		if (is_valid_point(game, next, target) && !dfs->visited[next.y][next.x])
 		{
-			register_next(game, stack, visited, next);
+			register_next(game, next, dfs);
 			break ;
 		}
 		i++;
 	}
-	free(direction);
+	free(dfs->direction);
 	return (i);
 }
 
@@ -104,29 +99,27 @@ int	**init_visited(t_game *game)
 
 bool	dfs(t_game *game, t_point player, char target)
 {
-	t_stack	stack;
+	t_dfs	dfs;
 	t_node	*node;
-	t_point	current;
-	int		**visited;
 	int		i;
 
-	visited = init_visited(game);
-	stack.top = NULL;
+	dfs.visited = init_visited(game);
+	dfs.stack.top = NULL;
 	node = init_node(player);
-	push(&stack, node);
-	visited[player.y][player.x] = 1;
-	while (stack.top != NULL)
+	push(&dfs.stack, node);
+	dfs.visited[player.y][player.x] = 1;
+	while (dfs.stack.top)
 	{
-		current = stack.top->point;
-		if (is_target(game, current, target, &stack))
+		dfs.current = dfs.stack.top->point;
+		if (is_target(game, target, &dfs))
 			return (true);
-		i = register_direction(game, &stack, visited, current, target);
+		i = register_direction(game, target, &dfs);
 		if (i == 4)
 		{
-			node = pop(&stack);
+			node = pop(&dfs.stack);
 			free(node);
 		}
 	}
-	free_stack(&stack);
+	free_stack(&dfs.stack);
 	return (false);
 }
