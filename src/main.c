@@ -1,11 +1,5 @@
 #include "so_long.h"
 
-int	close_window(t_game *game)
-{
-	mlx_destroy_window(game->mlx, game->window.win_ptr);
-	exit(0);
-}
-
 int	key_check(int keycode, t_game *game)
 {
 	if (keycode == ESC)
