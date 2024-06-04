@@ -1,5 +1,19 @@
 #include "so_long.h"
 
+void	repleace_map(t_game *game, int x, int y, int up_down, int left_right)
+{
+	if (game->map.map_str[y - up_down][x - left_right] == COLLECTIBLE)
+		game->player.get_coin += 1;
+	put_image(game, EMPTY, x, y);
+	game->map.map_str[y - up_down][x - left_right] = PLAYER;
+	game->map.map_str[y][x] = EMPTY;
+	game->player.point.x = x - left_right;
+	game->player.point.y = y - up_down;
+	game->player.move_count++;
+	ft_printf("Move count: %d\n", game->player.move_count);
+	put_image(game, PLAYER, x - left_right, y - up_down);
+}
+
 void	up_player(t_game *game)
 {
 	int		x;
@@ -23,15 +37,7 @@ void	up_player(t_game *game)
 			put_message("You can't leave", "You need to collect all the coin");
 		return ;
 	}
-	if (game->map.map_str[y - 1][x] == COLLECTIBLE)
-		game->player.get_coin += 1;
-	put_image(game, EMPTY, x, y);
-	game->map.map_str[y - 1][x] = PLAYER;
-	game->map.map_str[y][x] = EMPTY;
-	game->player.point.y -= 1;
-	game->player.move_count++;
-	ft_printf("Move count: %d\n", game->player.move_count);
-	put_image(game, PLAYER, x, y - 1);
+	repleace_map(game, x, y, 1, 0);
 }
 
 void	down_player(t_game *game)
@@ -57,15 +63,7 @@ void	down_player(t_game *game)
 			put_message("You can't leave", "You need to collect all the coin");
 		return ;
 	}
-	if (game->map.map_str[y + 1][x] == COLLECTIBLE)
-		game->player.get_coin += 1;
-	put_image(game, EMPTY, x, y);
-	game->map.map_str[y + 1][x] = PLAYER;
-	game->map.map_str[y][x] = EMPTY;
-	game->player.point.y += 1;
-	game->player.move_count++;
-	ft_printf("Move count: %d\n", game->player.move_count);
-	put_image(game, PLAYER, x, y + 1);
+	repleace_map(game, x, y, -1, 0);
 }
 
 void	left_player(t_game *game)
@@ -91,15 +89,7 @@ void	left_player(t_game *game)
 			put_message("You can't leave", "You need to collect all the coin");
 		return ;
 	}
-	if (game->map.map_str[y][x - 1] == COLLECTIBLE)
-		game->player.get_coin += 1;
-	put_image(game, EMPTY, x, y);
-	game->map.map_str[y][x - 1] = PLAYER;
-	game->map.map_str[y][x] = EMPTY;
-	game->player.point.x -= 1;
-	game->player.move_count++;
-	ft_printf("Move count: %d\n", game->player.move_count);
-	put_image(game, PLAYER, x - 1, y);
+	repleace_map(game, x, y, 0, 1);
 }
 
 void	right_player(t_game *game)
@@ -125,13 +115,5 @@ void	right_player(t_game *game)
 			put_message("You can't leave", "You need to collect all the coin");
 		return ;
 	}
-	if (game->map.map_str[y][x + 1] == COLLECTIBLE)
-		game->player.get_coin += 1;
-	put_image(game, EMPTY, x, y);
-	game->map.map_str[y][x + 1] = PLAYER;
-	game->map.map_str[y][x] = EMPTY;
-	game->player.point.x += 1;
-	game->player.move_count++;
-	ft_printf("Move count: %d\n", game->player.move_count);
-	put_image(game, PLAYER, x + 1, y);
+	repleace_map(game, x, y, 0, -1);
 }
