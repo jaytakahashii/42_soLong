@@ -18,13 +18,17 @@ RM = rm -rf
 NORM = norminette
 
 SRC_FILES = main.c\
-			map.c\
-			image.c\
 			error.c\
-			move.c\
-			deepth_first_search.c\
 			window.c\
-			map_check.c\
+			file.c\
+			map.c\
+			utils.c\
+			map_utils.c\
+			image.c\
+			move.c\
+			dfs.c\
+			dfs_utils.c\
+			stack_utils.c
 
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 

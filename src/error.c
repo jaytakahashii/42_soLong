@@ -12,11 +12,3 @@ void	error_and_exit(char *error_message, char *message, t_game *game)
 	}
 	exit(0);
 }
-
-void	put_message(char *error_message, char *message)
-{
-	ft_printf("%s", error_message);
-	if (message)
-		ft_printf(": %s", message);
-	ft_printf("\n");
-}

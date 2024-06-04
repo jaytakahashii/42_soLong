@@ -1,0 +1,46 @@
+#include "so_long.h"
+
+void	push(t_stack *stack, t_node *node)
+{
+	if (stack->top == NULL)
+	{
+		stack->top = node;
+		return ;
+	}
+	node->next = stack->top;
+	stack->top = node;
+}
+
+t_node	*pop(t_stack *stack)
+{
+	t_node	*node;
+
+	if (stack->top == NULL)
+		return (NULL);
+	node = stack->top;
+	stack->top = stack->top->next;
+	return (node);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*node;
+
+	while (stack->top != NULL)
+	{
+		node = pop(stack);
+		free(node);
+	}
+}
+
+t_node	*init_node(t_point point)
+{
+	t_node	*node;
+
+	node = (t_node *)malloc(sizeof(t_node));
+	if (node == NULL)
+		return (NULL);
+	node->point = point;
+	node->next = NULL;
+	return (node);
+}

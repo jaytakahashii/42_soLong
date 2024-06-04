@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-int	key_check(int keycode, t_game *game)
+static int	key_check(int keycode, t_game *game)
 {
 	if (keycode == ESC)
 		close_window(game);
@@ -15,7 +15,7 @@ int	key_check(int keycode, t_game *game)
 	return (0);
 }
 
-void	game_init(t_game *game)
+static void	game_init(t_game *game)
 {
 	game->mlx = NULL;
 	game->window.win_ptr = NULL;
@@ -33,35 +33,12 @@ void	game_init(t_game *game)
 	game->player.get_coin = 0;
 }
 
-bool	diff_extension(char *file_name, char *ext)
+void	put_message(char *error_message, char *message)
 {
-	int	file_len;
-	int	ext_len;
-
-	file_len = ft_strlen(file_name);
-	ext_len = ft_strlen(ext);
-	if (file_len < ext_len)
-		return (false);
-	while (ext_len > 0)
-	{
-		if (file_name[file_len - 1] != ext[ext_len - 1])
-			return (false);
-		file_len--;
-		ext_len--;
-	}
-	return (true);
-}
-
-int	get_fd(char *map_file_path, t_game *game)
-{
-	int	fd;
-
-	fd = open(map_file_path, O_RDONLY);
-	if (fd < 0)
-		error_and_exit("Invalid map file", "failed to open map file", game);
-	if (diff_extension(map_file_path, ".ber") == false)
-		error_and_exit("Invalid map file", "file extension must be .ber", game);
-	return (fd);
+	ft_printf("%s", error_message);
+	if (message)
+		ft_printf(": %s", message);
+	ft_printf("\n");
 }
 
 int	main(int ac, char **av)
