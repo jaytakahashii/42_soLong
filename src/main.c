@@ -3,7 +3,7 @@
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->window.window);
-	return (0);
+	exit(0);
 }
 
 int	key_check(int keycode, t_game *game)
