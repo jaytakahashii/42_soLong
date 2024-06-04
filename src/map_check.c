@@ -90,8 +90,8 @@ void	basic_map_check(char **map, t_game *game)
 		}
 		check_rectangular(game->map.width, width, game);
 	}
-	if (exit_count == 0 || game->map.total_coin == 0)
-		error_and_exit("Invalid map", "map must contain at least one exit and one collectible", game);
+	if (exit_count != 0 || game->map.total_coin == 0)
+		error_and_exit("Invalid map", "map must contain only one exit and at least one collectible", game);
 	check_height(height, game);
 	game->window.width = width * IMAGE_SIZE;
 	game->window.height = height * IMAGE_SIZE;
