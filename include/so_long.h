@@ -115,7 +115,7 @@ typedef struct s_window
 
 typedef struct s_map
 {
-	char	**map;
+	char	**map_str;
 	int		width;
 	int		height;
 	int		total_coin;

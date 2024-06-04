@@ -6,7 +6,7 @@ static bool	is_valid_point(t_game *game, t_point point)
 	{
 		return (false);
 	}
-	if (game->map.map[point.y][point.x] == WALL)
+	if (game->map.map_str[point.y][point.x] == WALL)
 	{
 		return (false);
 	}
@@ -64,7 +64,7 @@ bool	dfs(t_game *game, t_point player, char target)
 	while (stack.top != NULL)
 	{
 		current = stack.top->point;
-		if (game->map.map[current.y][current.x] == target)
+		if (game->map.map_str[current.y][current.x] == target)
 		{
 			free_stack(&stack);
 			return (true);

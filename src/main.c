@@ -27,7 +27,7 @@ void	game_init(t_game *game)
 	game->window.win_ptr = NULL;
 	game->window.width = 0;
 	game->window.height = 0;
-	game->map.map = NULL;
+	game->map.map_str = NULL;
 	game->map.width = 0;
 	game->map.height = 0;
 	game->map.total_coin = 0;
@@ -59,8 +59,8 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
 	fd = get_fd(av[1], &game);
-	game.map.map = get_map(fd, &game);
-	check_map(game.map.map, &game);
+	game.map.map_str = get_map(fd, &game);
+	check_map(game.map.map_str, &game);
 	window_init(&game);
 	map_init(&game);
 

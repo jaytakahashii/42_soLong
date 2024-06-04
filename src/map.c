@@ -26,7 +26,7 @@ void	map_init(t_game *game)
 		width = 0;
 		while (width < game->map.width)
 		{
-			put_image(game, game->map.map[height][width], width, height);
+			put_image(game, game->map.map_str[height][width], width, height);
 			width++;
 		}
 		height++;
