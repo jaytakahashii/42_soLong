@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:23:39 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:27:32 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@
 # define EXIT_PATH "textures/only_piich_42.xpm"
 # define PLAYER_PATH "textures/only_mario_42.xpm"
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int	x;
 	int	y;
@@ -88,16 +88,14 @@ typedef struct	s_point
 
 typedef struct s_node
 {
-	t_point	point;
+	t_point			point;
 	struct s_node	*next;
 }				t_node;
 
-
 typedef struct s_stack
 {
-	t_node *top;
+	t_node	*top;
 }				t_stack;
-
 
 typedef struct s_player
 {
@@ -139,16 +137,15 @@ void	put_message(char *error_message, char *message);
 
 void	window_init(t_game *game);
 
-void 	put_image(t_game *game, char map_c, int x, int y);
+void	put_image(t_game *game, char map_c, int x, int y);
 void	clear_check(t_game *game);
 
 void	map_init(t_game *game);
 
 void	up_player(t_game *game);
-void 	down_player(t_game *game);
-void 	left_player(t_game *game);
-void 	right_player(t_game *game);
-
+void	down_player(t_game *game);
+void	left_player(t_game *game);
+void	right_player(t_game *game);
 
 int		close_window(t_game *game);
 
@@ -161,7 +158,7 @@ void	basic_map_check(char **map, t_game *game);
 
 void	check_valid_char(char c, t_game *game);
 void	check_outer_wall(int x, int y, t_game *game, char map_c);
-void check_width(int width, t_game *game);
+void	check_width(int width, t_game *game);
 void	check_height(int height, t_game *game);
 void	check_rectangular(int first_line_len, int line_len, t_game *game);
 
@@ -173,9 +170,9 @@ t_node	*init_node(t_point point);
 void	add_player(t_game *game, int x, int y, char map_c);
 
 bool	is_valid_point(t_game *game, t_point point, char target);
-bool	is_target(t_game *game, t_point player, char target, int *can_get_coin, t_stack *stack);
-int	**basic_vector(int i, int **direction);
-
-int	strlen_double_ptr(char **str);
+bool	is_target(t_game *game, t_point player, char target,
+			int *can_get_coin, t_stack *stack);
+int		**basic_vector(int i, int **direction);
+int		strlen_double_ptr(char **str);
 
 #endif
