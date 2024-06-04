@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 17:49:05 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:20:30 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,20 @@ void	register_next(t_game *game, t_stack *stack, int **visited, t_point next)
 	tmp = next;
 	node = (t_node *)malloc(sizeof(t_node));
 	if (node == NULL)
-		error_and_exit("Memory allocation error", "failed to allocate memory", game);
+		error_and_exit("Memory allocation error",
+			"failed to allocate memory",
+			game);
 	node->point = tmp;
 	node->next = NULL;
 	push(stack, node);
 	visited[next.y][next.x] = 1;
 }
 
-int	register_direction(t_game *game, t_stack *stack, int **visited, t_point current, char target)
+int	register_direction(t_game *game,
+		t_stack *stack,
+		int **visited,
+		t_point current,
+		char target)
 {
 	t_point	next;
 	int		**direction;
@@ -57,7 +63,8 @@ int	register_direction(t_game *game, t_stack *stack, int **visited, t_point curr
 	direction = init_direction();
 	while (i < 4)
 	{
-		next = (t_point){current.x + direction[i][0], current.y + direction[i][1]};
+		next = (t_point){current.x + direction[i][0],
+			current.y + direction[i][1]};
 		if (is_valid_point(game, next, target) && !visited[next.y][next.x])
 		{
 			register_next(game, stack, visited, next);
@@ -77,13 +84,13 @@ int	**init_visited(t_game *game)
 
 	visited = (int **)malloc(sizeof(int *) * game->map.height);
 	if (visited == NULL)
-		error_and_exit("Memory allocation error", "failed to allocate memory", game);
+		error_and_exit("Memory allocation error", NULL, game);
 	i = 0;
 	while (i < game->map.height)
 	{
 		visited[i] = (int *)malloc(sizeof(int) * game->map.width);
 		if (visited[i] == NULL)
-			error_and_exit("Memory allocation error", "failed to allocate memory", game);
+			error_and_exit("Memory allocation error", NULL, game);
 		j = 0;
 		while (j < game->map.width)
 		{
@@ -99,8 +106,8 @@ bool	dfs(t_game *game, t_point player, char target, int can_get_coin)
 {
 	t_stack	stack;
 	t_node	*node;
-	t_point current;
-	int	**visited;
+	t_point	current;
+	int		**visited;
 	int		i;
 
 	visited = init_visited(game);

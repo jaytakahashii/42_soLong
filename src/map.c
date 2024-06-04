@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:44 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 17:49:45 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:14:28 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**get_map(int fd, t_game *game)
 {
 	char	*map_str;
 	char	**map;
-	ssize_t read_bytes;
+	ssize_t	read_bytes;
 
 	map_str = malloc(sizeof(char) * READ_SIZE);
 	if (!map_str)
@@ -86,10 +86,12 @@ void	clear_check(t_game *game)
 	can_get_coin = 0;
 	while (can_get_coin < game->map.total_coin)
 	{
+		printf("\ncan_get_coin: %d\n", can_get_coin);
 		if (dfs(game, game->player.point, COLLECTIBLE, can_get_coin) == false)
 			error_and_exit("Invalid map", "collectible is not reachable", game);
 		can_get_coin++;
 	}
+	printf("\nexiting\n");
 	if (dfs(game, game->player.point, EXIT, can_get_coin) == false)
 		error_and_exit("Invalid map", "exit is not reachable", game);
 }
@@ -105,7 +107,8 @@ void	check_map(char **map, t_game *game)
 	if (game->map.exit_count != 1)
 		error_and_exit("Invalid map", "map must contain only one exit", game);
 	if (game->map.total_coin == 0)
-		error_and_exit("Invalid map", "map must contain at least one collectible", game);
+		error_and_exit("Invalid map",
+			"map must contain at least one collectible", game);
 	if (game->map.player_count != 1)
 		error_and_exit("Invalid map", "map must contain only one player", game);
 	clear_check(game);

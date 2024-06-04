@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:34 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 17:49:35 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:12:02 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ int	main(int ac, char **av)
 
 	game_init(&game);
 	if (ac != 2)
-		error_and_exit("Invalid arguments", "too few or too many arguments", NULL);
+		error_and_exit("Invalid arguments",
+			"too few or too many arguments", NULL);
 	fd = get_fd(av[1], &game);
 	game.map.map_str = get_map(fd, &game);
 	check_map(game.map.map_str, &game);
 	window_init(&game);
 	map_init(&game);
-
-	mlx_hook(game.window.win_ptr, DestroyNotify, StructureNotifyMask, close_window, &game);
+	mlx_hook(game.window.win_ptr, DESTROYNOTIFY, STRUCTURENOTIFYMASK,
+		close_window, &game);
 	mlx_key_hook(game.window.win_ptr, key_check, &game);
 	mlx_loop(game.mlx);
 	return (0);

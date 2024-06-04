@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
+/*   Updated: 2024/06/04 18:12:42 by jtakahas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -33,8 +45,8 @@
 
 #  define READ_SIZE 3000
 
-#  define DestroyNotify 17
-#  define StructureNotifyMask 131072
+#  define DESTROYNOTIFY 17
+#  define STRUCTURENOTIFYMASK 1L << 17
 # endif
 
 # ifdef __linux__
