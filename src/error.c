@@ -5,9 +5,12 @@ void	error_and_exit(char *error_message, char *message, t_game *game)
 	ft_printf("Error: %s", error_message);
 	if (message)
 		ft_printf(" (%s)", message);
-	if (game->mlx)
-		mlx_destroy_window(game->mlx, game->window.win_ptr);
-	exit(1);
+	ft_printf("\n");
+	if (game && game->mlx && game->window.win_ptr)
+	{
+		close_window(game);
+	}
+	exit(0);
 }
 
 void	put_message(char *error_message, char *message)

@@ -108,6 +108,7 @@ typedef struct s_player
 
 typedef struct s_window
 {
+	bool	is_open;
 	void	*win_ptr;
 	int		width;
 	int		height;
@@ -138,8 +139,6 @@ void	window_init(t_game *game);
 void 	put_image(t_game *game, char map_c, int x, int y);
 
 void	map_init(t_game *game);
-
-char	*get_next_str(int fd);
 
 void	up_player(t_game *game);
 void 	down_player(t_game *game);
