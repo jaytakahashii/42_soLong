@@ -25,6 +25,8 @@ void	game_init(t_game *game)
 	game->map.width = 0;
 	game->map.height = 0;
 	game->map.total_coin = 0;
+	game->map.exit_count = 0;
+	game->map.player_count = 0;
 	game->player.point.x = 0;
 	game->player.point.y = 0;
 	game->player.move_count = 0;
@@ -61,7 +63,6 @@ int	get_fd(char *map_file_path, t_game *game)
 		error_and_exit("Invalid map file", "file extension must be .ber", game);
 	return (fd);
 }
-
 
 int	main(int ac, char **av)
 {

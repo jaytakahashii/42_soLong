@@ -119,6 +119,8 @@ typedef struct s_map
 	int		width;
 	int		height;
 	int		total_coin;
+	int		player_count;
+	int		exit_count;
 }				t_map;
 
 typedef struct s_game
