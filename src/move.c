@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:47 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:54:22 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 12:55:44 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,19 @@ void	up_player(t_game *game)
 	y = game->player.point.y;
 	if (game->map.map_str[y - 1][x] == WALL)
 	{
-		put_message("You can't go up", "That's a wall");
+		put_message(RED"You can't go up"ENDC, "That's a wall");
 		return ;
 	}
 	if (game->map.map_str[y - 1][x] == EXIT)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
-			put_message("Congratulations", "CLEAR!");
+			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
 		else
-			put_message("You can't leave", "You need to collect all the coin");
+			put_message(RED"You can't leave"ENDC,
+				"You need to collect all the coin");
 		return ;
 	}
 	repleace_map(game, (t_point){x, y}, 1, 0);
@@ -66,18 +67,19 @@ void	down_player(t_game *game)
 	y = game->player.point.y;
 	if (game->map.map_str[y + 1][x] == WALL)
 	{
-		put_message("You can't go down", "That's a wall");
+		put_message(RED"You can't go down"ENDC, "That's a wall");
 		return ;
 	}
 	if (game->map.map_str[y + 1][x] == EXIT)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
-			put_message("Congratulations", "CLEAR!");
+			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
 		else
-			put_message("You can't leave", "You need to collect all the coin");
+			put_message(RED"You can't leave"ENDC,
+				"You need to collect all the coin");
 		return ;
 	}
 	repleace_map(game, (t_point){x, y}, -1, 0);
@@ -92,18 +94,19 @@ void	left_player(t_game *game)
 	y = game->player.point.y;
 	if (game->map.map_str[y][x - 1] == WALL)
 	{
-		put_message("You can't go left", "That's a wall");
+		put_message(RED"You can't go left"ENDC, "That's a wall");
 		return ;
 	}
 	if (game->map.map_str[y][x - 1] == EXIT)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
-			put_message("Congratulations", "CLEAR!");
+			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
 		else
-			put_message("You can't leave", "You need to collect all the coin");
+			put_message(RED"You can't leave"ENDC,
+				"You need to collect all the coin");
 		return ;
 	}
 	repleace_map(game, (t_point){x, y}, 0, 1);
@@ -118,18 +121,19 @@ void	right_player(t_game *game)
 	y = game->player.point.y;
 	if (game->map.map_str[y][x + 1] == WALL)
 	{
-		put_message("You can't go right", "That's a wall");
+		put_message(RED"You can't go right"ENDC, "That's a wall");
 		return ;
 	}
 	if (game->map.map_str[y][x + 1] == EXIT)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
-			put_message("Congratulations", "CLEAR!");
+			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
 		else
-			put_message("You can't leave", "You need to collect all the coin");
+			put_message(RED"You can't leave"ENDC,
+				"You need to collect all the coin");
 		return ;
 	}
 	repleace_map(game, (t_point){x, y}, 0, -1);
