@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:44 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:37:09 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 13:49:45 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,6 @@ void	map_init(t_game *game)
 		}
 		height++;
 	}
-}
-
-char	**get_map(int fd, t_game *game)
-{
-	char	*map_str;
-	char	**map;
-	ssize_t	read_bytes;
-
-	map_str = malloc(sizeof(char) * READ_SIZE);
-	if (!map_str)
-		error_and_exit("Error: Malloc error", NULL, game);
-	read_bytes = read(fd, map_str, READ_SIZE);
-	if (read_bytes < 0)
-		error_and_exit("Error: Read error", NULL, game);
-	if (read_bytes > MAX_READ_SIZE)
-		error_and_exit("Error: Map is too big", NULL, game);
-	map_str[read_bytes] = '\0';
-	map = ft_split(map_str, '\n');
-	if (!map)
-		error_and_exit("Error: Split error", NULL, game);
-	free(map_str);
-	close(fd);
-	return (map);
 }
 
 void	basic_map_check(char **map, t_game *game)
@@ -87,11 +64,11 @@ void	clear_check(t_game *game)
 	while (can_get_coin < game->map.total_coin)
 	{
 		if (dfs(game, game->player.point, COLLECTIBLE) == false)
-			error_and_exit("Invalid map", "collectible is not reachable", game);
+			error_and_exit("Invalid map", "collectible is not reachable", NULL);
 		can_get_coin++;
 	}
 	if (dfs(game, game->player.point, EXIT) == false)
-		error_and_exit("Invalid map", "exit is not reachable", game);
+		error_and_exit("Invalid map", "exit is not reachable", NULL);
 }
 
 void	check_map(char **map, t_game *game)
@@ -103,11 +80,11 @@ void	check_map(char **map, t_game *game)
 	game->window.width = game->map.width * IMAGE_SIZE;
 	game->window.height = game->map.height * IMAGE_SIZE;
 	if (game->map.exit_count != 1)
-		error_and_exit("Invalid map", "map must contain only one exit", game);
+		error_and_exit("Invalid map", "map must contain only one exit", NULL);
 	if (game->map.total_coin == 0)
 		error_and_exit("Invalid map",
-			"map must contain at least one collectible", game);
+			"map must contain at least one collectible", NULL);
 	if (game->map.player_count != 1)
-		error_and_exit("Invalid map", "map must contain only one player", game);
+		error_and_exit("Invalid map", "map must contain only one player", NULL);
 	clear_check(game);
 }
