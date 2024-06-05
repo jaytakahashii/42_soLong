@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:01:11 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:05:34 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,9 @@ char	**get_map(int fd);
 
 // map.c
 void	check_map(char **map, t_game *game);
+void	basic_map_check(char **map, t_game *game);
+void	clear_check(t_game *game);
+void	map_init(t_game *game);
 
 // map_utils.c
 void	check_width(int width);
@@ -172,29 +175,23 @@ bool	dfs(t_game *game, t_point player, char target);
 
 // window.c
 void	window_init(t_game *game);
+int		close_window(t_game *game);
 
+// image.c
 void	put_image(t_game *game, char map_c, int x, int y);
-void	clear_check(t_game *game);
 
-void	map_init(t_game *game);
-
+// move.c
 void	up_player(t_game *game);
 void	down_player(t_game *game);
 void	left_player(t_game *game);
 void	right_player(t_game *game);
 
-int		close_window(t_game *game);
-
-
-void	clear_check(t_game *game);
-void	basic_map_check(char **map, t_game *game);
-
-
+// stack_utils.c
 void	push(t_stack *stack, t_node *node);
 t_node	*pop(t_stack *stack);
 t_node	*init_node(t_point point);
 
-
+// dfs_utils.c
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);

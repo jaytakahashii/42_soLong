@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:41 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:00:40 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:06:33 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	check_outer_wall(int x, int y, t_game *game, char map_c)
 
 void	check_valid_char(char map_c)
 {
-	if (map_c != EMPTY && map_c != WALL && map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
+	if (map_c != EMPTY && map_c != WALL
+		&& map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
 		error_and_exit("Invalid map",
 			"map must contain only 0, 1, C, E, and P", NULL);
 }
