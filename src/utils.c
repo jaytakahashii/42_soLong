@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:57 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:08:43 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:52:27 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void	add_player(t_game *game, int x, int y, char map_c)
 		game->map.player_count++;
 	}
 	if (game->map.player_count > 1)
-		error_and_exit("Invalid map", "map must contain only one player", game);
+		error_and_exit("Invalid map", "map must contain only one player", NULL);
 }
