@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dfs_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:49:33 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 13:39:26 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	is_target(t_game *game, char target, t_dfs *dfs)
 	{
 		if (target == COLLECTIBLE)
 			game->map.map_str[dfs->current.y][dfs->current.x] = CAN_GET_COIN;
-		free_stack(&dfs->stack);
 		return (true);
 	}
 	return (false);

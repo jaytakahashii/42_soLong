@@ -28,7 +28,8 @@ SRC_FILES = main.c\
 			move.c\
 			dfs.c\
 			dfs_utils.c\
-			stack_utils.c
+			stack_utils.c\
+			get_map.c
 
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
