@@ -1,4 +1,5 @@
 NAME = so_long
+NAME_LINUX = so_long_linux
 LIBFT_NAME = libft
 LIBFT_DIR = libft/
 INCLUDE_DIR = include/
@@ -7,14 +8,28 @@ LIBFT_INCLUDE = -I $(LIBFT_DIR)$(INCLUDE_DIR)
 SRC_DIR = src/
 OBJ_DIR = .obj/
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-MINILIBX = -L mlx -l mlx -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Wextra -Werror -g
+MLX_MAC_FLAGS = -l mlx -framework OpenGL -framework AppKit
+MLX_LINUX_FLAGS = -lmlx_Linux -lXext -lX11
+
 AR = ar
 ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
-SRC_FILES = main.c
+SRC_FILES = main.c\
+			error.c\
+			window.c\
+			file.c\
+			map.c\
+			utils.c\
+			map_utils.c\
+			image.c\
+			move.c\
+			dfs.c\
+			dfs_utils.c\
+			stack_utils.c\
+			get_map.c
 
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
@@ -31,40 +46,54 @@ CUT 		= "\033[K"
 
 all: $(NAME)
 
+linux: $(NAME_LINUX)
+
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "\n"
-	@echo $(B) "--> Into libft directory" $(X)
+	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(B) "*** $(NAME) creating ***" $(X)
-	$(CC) $(CFLAGS) $(MINILIBX) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_MAC_FLAGS) -o $(NAME)
 	@echo "\n"
 	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
+
+$(NAME_LINUX): $(OBJ_DIR) $(OBJS)
+	@echo "\n"
+	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
+	@$(MAKE) -C $(LIBFT_DIR)
+	@echo $(B) "*** $(NAME_LINUX) creating ***" $(X)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME_LINUX)
+	@echo "\n"
+	@echo $(G) "!!!!!!! $(NAME_LINUX) created success !!!!!!!" $(X)
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@echo $(B) "Compiling $< into $@" $(X)
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT_INCLUDE) -c $< -o $@
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@echo $(R) "<< push_swap cleaning>>" $(X)
+	@echo $(R) "<< $(NAME) cleaning>>" $(X)
 	$(RM) $(OBJ_DIR)
 	@echo "\n"
 
 fclean:
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo $(R) "<< push_swap fcleaning >>" $(X)
+	@echo $(R) "<< $(NAME) fcleaning >>" $(X)
 	$(RM) $(OBJ_DIR)
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME_LINUX)
 	@echo "\n"
 
 re: fclean all
 
+relinux: fclean linux
+
 norm:
-	@echo $(R) "<<< push_swap error count >>>" $(X)
-	@norminette $(SRC_FILES) $(INCLUDE_DIR) | grep Error | wc -l
-	@norminette $(SRC_FILES) $(INCLUDE_DIR) | grep Error || true
+	@echo $(R) "<<< $(NAME) error count >>>" $(X)
+	@norminette $(SRC_DIR) $(INCLUDE_DIR) | grep Error | wc -l
+	@norminette $(SRC_DIR) $(INCLUDE_DIR) | grep Error || true
 	@echo "\n"
 	@$(MAKE) -C $(LIBFT_DIR) norm
 
