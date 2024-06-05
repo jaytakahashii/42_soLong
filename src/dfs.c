@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 13:58:57 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:02:13 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	**init_direction(void)
 	return (direction);
 }
 
-void	register_next(t_game *game, t_point next, t_dfs *dfs)
+void	register_next(t_point next, t_dfs *dfs)
 {
 	t_node	*node;
 	t_point	tmp;
@@ -62,7 +62,7 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 			dfs->current.y + dfs->direction[i][1]};
 		if (is_valid_point(game, next, target) && !dfs->visited[next.y][next.x])
 		{
-			register_next(game, next, dfs);
+			register_next(next, dfs);
 			break ;
 		}
 		i++;
