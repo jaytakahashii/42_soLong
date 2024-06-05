@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 02:50:22 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 13:55:09 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ void	register_next(t_game *game, t_point next, t_dfs *dfs)
 
 	tmp = next;
 	node = (t_node *)malloc(sizeof(t_node));
-	if (node == NULL)
-		error_and_exit("Memory allocation error",
-			"failed to allocate memory",
-			game);
+	if (!node)
+		error_and_exit("Malloc error", NULL, NULL);
 	node->point = tmp;
 	node->next = NULL;
 	push(&dfs->stack, node);
@@ -56,6 +54,8 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 
 	i = 0;
 	dfs->direction = init_direction();
+	if (!dfs->direction)
+		error_and_exit("Malloc error", NULL, NULL);
 	while (i < 4)
 	{
 		next = (t_point){dfs->current.x + dfs->direction[i][0],
@@ -67,7 +67,6 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 		}
 		i++;
 	}
-	free(dfs->direction);
 	return (i);
 }
 
@@ -79,13 +78,13 @@ int	**init_visited(t_game *game)
 
 	visited = (int **)malloc(sizeof(int *) * game->map.height);
 	if (visited == NULL)
-		error_and_exit("Memory allocation error", NULL, game);
+		return (NULL);
 	i = 0;
 	while (i < game->map.height)
 	{
 		visited[i] = (int *)malloc(sizeof(int) * game->map.width);
 		if (visited[i] == NULL)
-			error_and_exit("Memory allocation error", NULL, game);
+			return (NULL);
 		j = 0;
 		while (j < game->map.width)
 		{
@@ -104,8 +103,11 @@ bool	dfs(t_game *game, t_point player, char target)
 	int		i;
 
 	dfs.visited = init_visited(game);
+	if (!dfs.visited)
+		error_and_exit("Malloc error", NULL, NULL);
 	dfs.stack.top = NULL;
 	node = init_node(player);
+	if (!node)
 	push(&dfs.stack, node);
 	dfs.visited[player.y][player.x] = 1;
 	while (dfs.stack.top)
@@ -117,9 +119,7 @@ bool	dfs(t_game *game, t_point player, char target)
 		if (i == 4)
 		{
 			node = pop(&dfs.stack);
-			free(node);
 		}
 	}
-	free_stack(&dfs.stack);
 	return (false);
 }
