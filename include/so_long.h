@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 11:47:32 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/05 13:39:09 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 
 # include "mlx.h"
 
-# include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include <string.h>
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -68,6 +66,10 @@
 #  define DESTROYNOTIFY DestroyNotify
 #  define STRUCTURENOTIFYMASK StructureNotifyMask
 # endif
+
+# define RED	"\033[1m\033[31m"
+# define GREEN	"\033[1m\033[32m"
+# define ENDC	"\033[0m"
 
 # define IMAGE_SIZE 42
 # define EMPTY '0'
@@ -139,12 +141,36 @@ typedef struct s_game
 	t_player	player;
 }				t_game;
 
+// error.c
 void	error_and_exit(char *error_message, char *message, t_game *game);
 
-int		get_fd(char *file_name, t_game *game);
-
+// main.c
 void	put_message(char *error_message, char *message);
 
+// file.c
+int		get_fd(char *file_name);
+
+// get_map.c
+char	**get_map(int fd);
+
+// map.c
+void	check_map(char **map, t_game *game);
+
+// map_utils.c
+void	check_width(int width, t_game *game);
+void	check_valid_char(char c, t_game *game);
+void	check_outer_wall(int x, int y, t_game *game, char map_c);
+void	check_height(int height, t_game *game);
+void	check_rectangular(int first_line_len, int line_len, t_game *game);
+
+// utils.c
+int		strlen_double_ptr(char **str);
+void	add_player(t_game *game, int x, int y, char map_c);
+
+// dfs.c
+bool	dfs(t_game *game, t_point player, char target);
+
+// window.c
 void	window_init(t_game *game);
 
 void	put_image(t_game *game, char map_c, int x, int y);
@@ -159,29 +185,18 @@ void	right_player(t_game *game);
 
 int		close_window(t_game *game);
 
-bool	dfs(t_game *game, t_point player, char target);
 
 void	clear_check(t_game *game);
-char	**get_map(int fd, t_game *game);
-void	check_map(char **map, t_game *game);
 void	basic_map_check(char **map, t_game *game);
 
-void	check_valid_char(char c, t_game *game);
-void	check_outer_wall(int x, int y, t_game *game, char map_c);
-void	check_width(int width, t_game *game);
-void	check_height(int height, t_game *game);
-void	check_rectangular(int first_line_len, int line_len, t_game *game);
 
 void	push(t_stack *stack, t_node *node);
 t_node	*pop(t_stack *stack);
-void	free_stack(t_stack *stack);
 t_node	*init_node(t_point point);
 
-void	add_player(t_game *game, int x, int y, char map_c);
 
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
-int		strlen_double_ptr(char **str);
 
 #endif
