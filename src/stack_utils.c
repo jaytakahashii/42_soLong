@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:54 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 17:49:55 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:59:05 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,13 @@ t_node	*pop(t_stack *stack)
 	return (node);
 }
 
-void	free_stack(t_stack *stack)
-{
-	t_node	*node;
-
-	while (stack->top != NULL)
-	{
-		node = pop(stack);
-		free(node);
-	}
-}
-
 t_node	*init_node(t_point point)
 {
 	t_node	*node;
 
 	node = (t_node *)malloc(sizeof(t_node));
 	if (node == NULL)
-		return (NULL);
+		error_and_exit("Malloc error", NULL, NULL);
 	node->point = point;
 	node->next = NULL;
 	return (node);

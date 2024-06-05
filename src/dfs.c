@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 13:55:09 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:58:57 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ bool	dfs(t_game *game, t_point player, char target)
 		error_and_exit("Malloc error", NULL, NULL);
 	dfs.stack.top = NULL;
 	node = init_node(player);
-	if (!node)
 	push(&dfs.stack, node);
 	dfs.visited[player.y][player.x] = 1;
 	while (dfs.stack.top)
