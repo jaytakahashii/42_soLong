@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:34 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/04 18:12:02 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:03:24 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		error_and_exit("Invalid arguments",
 			"too few or too many arguments", NULL);
-	fd = get_fd(av[1], &game);
-	game.map.map_str = get_map(fd, &game);
+	fd = get_fd(av[1]);
+	game.map.map_str = get_map(fd);
 	check_map(game.map.map_str, &game);
 	window_init(&game);
 	map_init(&game);
