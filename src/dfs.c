@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 17:33:33 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:35:51 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,6 @@ int	**init_visited(t_game *game)
 			visited[i][j] = 0;
 	}
 	return (visited);
-}
-
-void	dfs_init(t_dfs *dfs)
-{
-	dfs->stack.top = NULL;
-	dfs->visited = NULL;
-	dfs->direction = NULL;
 }
 
 bool	dfs(t_game *game, t_point player, char target)

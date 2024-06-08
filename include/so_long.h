@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 16:50:15 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:37:13 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	check_height(int height, t_game *game);
 int		strlen_double_ptr(char **str);
 void	add_player(t_game *game, int x, int y, char map_c);
 void	free_map(char **map);
+void	dfs_init(t_dfs *dfs);
 
 // dfs.c
 bool	dfs(t_game *game, t_point player, char target);

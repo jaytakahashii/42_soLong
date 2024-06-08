@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:57 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 16:26:42 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:36:32 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,11 @@ void	free_map(char **map)
 		i++;
 	}
 	free(map);
+}
+
+void	dfs_init(t_dfs *dfs)
+{
+	dfs->stack.top = NULL;
+	dfs->visited = NULL;
+	dfs->direction = NULL;
 }
