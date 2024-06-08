@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 17:35:51 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:41:56 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,9 @@ int	**init_direction(void)
 	return (direction);
 }
 
-void	register_next(t_point next, t_dfs *dfs, t_game *game)
+void	register_next(t_point next, t_dfs *dfs)
 {
-	t_node	*node;
-
-	node = (t_node *)malloc(sizeof(t_node));
-	if (!node)
-		error_and_exit("Malloc error", NULL, game);
-	node->point = next;
-	node->next = NULL;
-	push(&dfs->stack, node);
+	push(&dfs->stack, next);
 	dfs->visited[next.y][next.x] = 1;
 }
 
@@ -67,7 +60,7 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 		if (is_valid_point(game, next, target)
 			&& !dfs->visited[next.y][next.x])
 		{
-			register_next(next, dfs, game);
+			register_next(next, dfs);
 			free_int_matrix(dfs->direction, 4);
 			dfs->direction = NULL;
 			return (i);
@@ -108,7 +101,6 @@ int	**init_visited(t_game *game)
 bool	dfs(t_game *game, t_point player, char target)
 {
 	t_dfs	dfs;
-	t_node	*node;
 	int		i;
 	bool	found;
 
@@ -117,13 +109,7 @@ bool	dfs(t_game *game, t_point player, char target)
 	dfs.visited = init_visited(game);
 	if (!dfs.visited)
 		return (false);
-	node = init_node(player);
-	if (!node)
-	{
-		free_int_matrix(dfs.visited, game->map.height);
-		return (false);
-	}
-	push(&dfs.stack, node);
+	push(&dfs.stack, player);
 	dfs.visited[player.y][player.x] = 1;
 	while (dfs.stack.top)
 	{
@@ -135,10 +121,7 @@ bool	dfs(t_game *game, t_point player, char target)
 		}
 		i = register_direction(game, target, &dfs);
 		if (i == 4)
-		{
-			node = pop(&dfs.stack);
-			free(node);
-		}
+			free(pop(&dfs.stack));
 	}
 	free_dfs(&dfs, game);
 	return (found);

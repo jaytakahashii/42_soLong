@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 17:37:13 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:40:38 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	left_player(t_game *game);
 void	right_player(t_game *game);
 
 // stack_utils.c
-void	push(t_stack *stack, t_node *node);
+void	push(t_stack *stack, t_point point);
 t_node	*pop(t_stack *stack);
 t_node	*init_node(t_point point);
 void	free_stack(t_stack *stack);
