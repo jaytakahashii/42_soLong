@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 16:23:07 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:50:15 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include <stdbool.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -191,10 +192,13 @@ void	right_player(t_game *game);
 void	push(t_stack *stack, t_node *node);
 t_node	*pop(t_stack *stack);
 t_node	*init_node(t_point point);
+void	free_stack(t_stack *stack);
 
 // dfs_utils.c
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
+void	free_dfs(t_dfs *dfs, t_game *game);
+void	free_int_matrix(int **matrix, int height);
 
 #endif

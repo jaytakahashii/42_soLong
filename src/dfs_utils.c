@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 14:15:03 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:54:29 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,23 @@ bool	is_target(t_game *game, char target, t_dfs *dfs)
 	return (false);
 }
 
-int	**basic_vector(int i, int **direction)
-{
+
+void free_int_matrix(int **matrix, int height) {
+	if (matrix) {
+		for (int i = 0; i < height; i++) {
+			free(matrix[i]);
+		}
+		free(matrix);
+	}
+}
+
+void free_dfs(t_dfs *dfs, t_game *game) {
+	free_stack(&dfs->stack);
+	free_int_matrix(dfs->visited, game->map.height);
+	free_int_matrix(dfs->direction, 4);
+}
+
+int **basic_vector(int i, int **direction) {
 	if (i == 0)
 	{
 		direction[i][0] = 1;
@@ -65,5 +80,51 @@ int	**basic_vector(int i, int **direction)
 		direction[i][0] = 0;
 		direction[i][1] = -1;
 	}
-	return (direction);
+	return direction;
 }
+
+
+// int	**basic_vector(int i, int **direction)
+// {
+// 	if (i == 0)
+// 	{
+// 		direction[i][0] = 1;
+// 		direction[i][1] = 0;
+// 	}
+// 	else if (i == 1)
+// 	{
+// 		direction[i][0] = 0;
+// 		direction[i][1] = 1;
+// 	}
+// 	else if (i == 2)
+// 	{
+// 		direction[i][0] = -1;
+// 		direction[i][1] = 0;
+// 	}
+// 	else if (i == 3)
+// 	{
+// 		direction[i][0] = 0;
+// 		direction[i][1] = -1;
+// 	}
+// 	return (direction);
+// }
+
+// void	free_dfs(t_dfs *dfs, t_game *game)
+// {
+// 	free_stack(&dfs->stack);
+// 	free_int_matrix(dfs->visited, game->map.height);
+// 	free_int_matrix(dfs->direction, 4);
+// }
+
+// void	free_int_matrix(int **matrix, int height)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < height)
+// 	{
+// 		free(matrix[i]);
+// 		i++;
+// 	}
+// 	free(matrix);
+// }

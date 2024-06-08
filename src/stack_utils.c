@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:54 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 12:51:01 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:36:14 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,15 @@ t_node	*init_node(t_point point)
 	node->point = point;
 	node->next = NULL;
 	return (node);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*node;
+
+	while (stack->top)
+	{
+		node = pop(stack);
+		free(node);
+	}
 }
