@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 13:43:14 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:14:51 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,5 @@ t_node	*init_node(t_point point);
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
-void	free_dfs(t_dfs *dfs, int map_height);
 
 #endif

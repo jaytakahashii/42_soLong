@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 12:55:32 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:15:10 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 	i = 0;
 	dfs->direction = init_direction();
 	if (!dfs->direction)
-	{
-		free_dfs(dfs, game->map.height);
 		error_and_exit("Malloc error", NULL, NULL);
-	}
 	while (i < 4)
 	{
 		next = (t_point){dfs->current.x + dfs->direction[i][0],
@@ -119,20 +116,14 @@ bool	dfs(t_game *game, t_point player, char target)
 	dfs.stack.top = NULL;
 	node = init_node(player);
 	if (!node)
-	{
-		free_dfs(&dfs, game->map.height);
 		return (false);
-	}
 	push(&dfs.stack, node);
 	dfs.visited[player.y][player.x] = 1;
 	while (dfs.stack.top)
 	{
 		dfs.current = dfs.stack.top->point;
 		if (is_target(game, target, &dfs))
-		{
-			free_dfs(&dfs, game->map.height);
 			return (true);
-		}
 		i = register_direction(game, target, &dfs);
 		if (i == 4)
 			node = pop(&dfs.stack);
