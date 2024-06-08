@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 17:41:56 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:55:54 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ int	**init_direction(void)
 	return (direction);
 }
 
-void	register_next(t_point next, t_dfs *dfs)
+bool	register_next(t_point next, t_dfs *dfs)
 {
-	push(&dfs->stack, next);
+	if (!push(&dfs->stack, next))
+		return (false);
 	dfs->visited[next.y][next.x] = 1;
+	return (true);
 }
 
 int	register_direction(t_game *game, char target, t_dfs *dfs)
@@ -51,7 +53,7 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 
 	dfs->direction = init_direction();
 	if (!dfs->direction)
-		error_and_exit("Malloc error", NULL, game);
+		return (-1);
 	i = -1;
 	while (++i < 4)
 	{
@@ -60,10 +62,9 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 		if (is_valid_point(game, next, target)
 			&& !dfs->visited[next.y][next.x])
 		{
-			register_next(next, dfs);
-			free_int_matrix(dfs->direction, 4);
-			dfs->direction = NULL;
-			return (i);
+			if (!register_next(next, dfs))
+				return (-1);
+			break ;
 		}
 	}
 	free_int_matrix(dfs->direction, 4);
@@ -71,7 +72,7 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 	return (i);
 }
 
-int	**init_visited(t_game *game)
+int	**init_visited(t_game *game, t_point player)
 {
 	int	**visited;
 	int	i;
@@ -95,6 +96,7 @@ int	**init_visited(t_game *game)
 		while (++j < game->map.width)
 			visited[i][j] = 0;
 	}
+	visited[player.y][player.x] = 1;
 	return (visited);
 }
 
@@ -106,12 +108,12 @@ bool	dfs(t_game *game, t_point player, char target)
 
 	found = false;
 	dfs_init(&dfs);
-	dfs.visited = init_visited(game);
+	dfs.visited = init_visited(game, player);
 	if (!dfs.visited)
 		return (false);
-	push(&dfs.stack, player);
-	dfs.visited[player.y][player.x] = 1;
-	while (dfs.stack.top)
+	if (!push(&dfs.stack, player))
+		i = -1;
+	while (dfs.stack.top && i != -1)
 	{
 		dfs.current = dfs.stack.top->point;
 		if (is_target(game, target, &dfs))
