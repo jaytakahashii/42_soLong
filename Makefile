@@ -8,7 +8,7 @@ LIBFT_INCLUDE = -I $(LIBFT_DIR)$(INCLUDE_DIR)
 SRC_DIR = src/
 OBJ_DIR = .obj/
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 MLX_MAC_FLAGS = -l mlx -framework OpenGL -framework AppKit
 MLX_LINUX_FLAGS = -lmlx_Linux -lXext -lX11
 
