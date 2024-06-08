@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 14:15:10 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:23:49 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	**init_direction(void)
 	return (direction);
 }
 
-void	register_next(t_point next, t_dfs *dfs)
+void	register_next(t_point next, t_dfs *dfs, t_game *game)
 {
 	t_node	*node;
 	t_point	tmp;
@@ -40,7 +40,7 @@ void	register_next(t_point next, t_dfs *dfs)
 	tmp = next;
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)
-		error_and_exit("Malloc error", NULL, NULL);
+		error_and_exit("Malloc error", NULL, game);
 	node->point = tmp;
 	node->next = NULL;
 	push(&dfs->stack, node);
@@ -55,14 +55,14 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 	i = 0;
 	dfs->direction = init_direction();
 	if (!dfs->direction)
-		error_and_exit("Malloc error", NULL, NULL);
+		error_and_exit("Malloc error", NULL, game);
 	while (i < 4)
 	{
 		next = (t_point){dfs->current.x + dfs->direction[i][0],
 			dfs->current.y + dfs->direction[i][1]};
 		if (is_valid_point(game, next, target) && !dfs->visited[next.y][next.x])
 		{
-			register_next(next, dfs);
+			register_next(next, dfs, game);
 			break ;
 		}
 		i++;

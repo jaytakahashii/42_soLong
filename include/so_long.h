@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 14:14:51 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:23:07 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,11 @@ void	clear_check(t_game *game);
 void	map_init(t_game *game);
 
 // map_utils.c
-void	check_width(int width, char **map);
+void	check_width(int width, t_game *game);
 void	check_outer_wall(int x, int y, t_game *game, char map_c);
-void	check_valid_char(char map_c, char **map);
-void	check_rectangular(int first_line_len, int line_len, char **map);
-void	check_height(int height, char **map);
+void	check_valid_char(char map_c, t_game *game);
+void	check_rectangular(int first_line_len, int line_len, t_game *game);
+void	check_height(int height, t_game *game);
 
 // utils.c
 int		strlen_double_ptr(char **str);
