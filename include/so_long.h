@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:05:34 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:47:25 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include <stdbool.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -160,15 +161,17 @@ void	clear_check(t_game *game);
 void	map_init(t_game *game);
 
 // map_utils.c
-void	check_width(int width);
-void	check_valid_char(char map_c);
+void	check_width(int width, t_game *game);
 void	check_outer_wall(int x, int y, t_game *game, char map_c);
-void	check_height(int height);
-void	check_rectangular(int first_line_len, int line_len);
+void	check_valid_char(char map_c, t_game *game);
+void	check_rectangular(int first_line_len, int line_len, t_game *game);
+void	check_height(int height, t_game *game);
 
 // utils.c
 int		strlen_double_ptr(char **str);
 void	add_player(t_game *game, int x, int y, char map_c);
+void	free_map(char **map);
+void	dfs_init(t_dfs *dfs);
 
 // dfs.c
 bool	dfs(t_game *game, t_point player, char target);
@@ -187,13 +190,16 @@ void	left_player(t_game *game);
 void	right_player(t_game *game);
 
 // stack_utils.c
-void	push(t_stack *stack, t_node *node);
+bool	push(t_stack *stack, t_point point);
 t_node	*pop(t_stack *stack);
 t_node	*init_node(t_point point);
+void	free_stack(t_stack *stack);
 
 // dfs_utils.c
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
+void	free_dfs(t_dfs *dfs, t_game *game);
+void	free_int_matrix(int **matrix, int height);
 
 #endif

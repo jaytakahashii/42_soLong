@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:02:13 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:55:54 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,34 @@ int	**init_direction(void)
 {
 	int	**direction;
 	int	i;
+	int	j;
 
-	direction = (int **)malloc(sizeof(int *) * 4);
+	direction = malloc(sizeof(int *) * 4);
 	if (direction == NULL)
 		return (NULL);
-	i = 0;
-	while (i < 4)
+	i = -1;
+	while (++i < 4)
 	{
 		direction[i] = (int *)malloc(sizeof(int) * 2);
 		if (direction[i] == NULL)
+		{
+			j = -1;
+			while (++j < i)
+				free(direction[j]);
+			free(direction);
 			return (NULL);
+		}
 		direction = basic_vector(i, direction);
-		i++;
 	}
 	return (direction);
 }
 
-void	register_next(t_point next, t_dfs *dfs)
+bool	register_next(t_point next, t_dfs *dfs)
 {
-	t_node	*node;
-	t_point	tmp;
-
-	tmp = next;
-	node = (t_node *)malloc(sizeof(t_node));
-	if (!node)
-		error_and_exit("Malloc error", NULL, NULL);
-	node->point = tmp;
-	node->next = NULL;
-	push(&dfs->stack, node);
+	if (!push(&dfs->stack, next))
+		return (false);
 	dfs->visited[next.y][next.x] = 1;
+	return (true);
 }
 
 int	register_direction(t_game *game, char target, t_dfs *dfs)
@@ -52,73 +51,80 @@ int	register_direction(t_game *game, char target, t_dfs *dfs)
 	t_point	next;
 	int		i;
 
-	i = 0;
 	dfs->direction = init_direction();
 	if (!dfs->direction)
-		error_and_exit("Malloc error", NULL, NULL);
-	while (i < 4)
+		return (-1);
+	i = -1;
+	while (++i < 4)
 	{
 		next = (t_point){dfs->current.x + dfs->direction[i][0],
 			dfs->current.y + dfs->direction[i][1]};
-		if (is_valid_point(game, next, target) && !dfs->visited[next.y][next.x])
+		if (is_valid_point(game, next, target)
+			&& !dfs->visited[next.y][next.x])
 		{
-			register_next(next, dfs);
+			if (!register_next(next, dfs))
+				return (-1);
 			break ;
 		}
-		i++;
 	}
+	free_int_matrix(dfs->direction, 4);
+	dfs->direction = NULL;
 	return (i);
 }
 
-int	**init_visited(t_game *game)
+int	**init_visited(t_game *game, t_point player)
 {
 	int	**visited;
 	int	i;
 	int	j;
 
 	visited = (int **)malloc(sizeof(int *) * game->map.height);
-	if (visited == NULL)
+	if (!visited)
 		return (NULL);
-	i = 0;
-	while (i < game->map.height)
+	i = -1;
+	while (++i < game->map.height)
 	{
 		visited[i] = (int *)malloc(sizeof(int) * game->map.width);
 		if (visited[i] == NULL)
-			return (NULL);
-		j = 0;
-		while (j < game->map.width)
 		{
-			visited[i][j] = 0;
-			j++;
+			while (i-- > 0)
+				free(visited[i]);
+			free(visited);
+			return (NULL);
 		}
-		i++;
+		j = -1;
+		while (++j < game->map.width)
+			visited[i][j] = 0;
 	}
+	visited[player.y][player.x] = 1;
 	return (visited);
 }
 
 bool	dfs(t_game *game, t_point player, char target)
 {
 	t_dfs	dfs;
-	t_node	*node;
 	int		i;
+	bool	found;
 
-	dfs.visited = init_visited(game);
+	found = false;
+	dfs_init(&dfs);
+	dfs.visited = init_visited(game, player);
 	if (!dfs.visited)
-		error_and_exit("Malloc error", NULL, NULL);
-	dfs.stack.top = NULL;
-	node = init_node(player);
-	push(&dfs.stack, node);
-	dfs.visited[player.y][player.x] = 1;
-	while (dfs.stack.top)
+		return (false);
+	if (!push(&dfs.stack, player))
+		i = -1;
+	while (dfs.stack.top && i != -1)
 	{
 		dfs.current = dfs.stack.top->point;
 		if (is_target(game, target, &dfs))
-			return (true);
+		{
+			found = true;
+			break ;
+		}
 		i = register_direction(game, target, &dfs);
 		if (i == 4)
-		{
-			node = pop(&dfs.stack);
-		}
+			free(pop(&dfs.stack));
 	}
-	return (false);
+	free_dfs(&dfs, game);
+	return (found);
 }

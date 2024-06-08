@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 13:39:26 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:36:28 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ bool	is_target(t_game *game, char target, t_dfs *dfs)
 		return (true);
 	}
 	return (false);
+}
+
+void	free_int_matrix(int **matrix, int height)
+{
+	int	i;
+
+	i = 0;
+	if (matrix)
+	{
+		while (i < height)
+			free(matrix[i++]);
+		free(matrix);
+	}
+}
+
+void	free_dfs(t_dfs *dfs, t_game *game)
+{
+	free_stack(&dfs->stack);
+	free_int_matrix(dfs->visited, game->map.height);
+	free_int_matrix(dfs->direction, 4);
 }
 
 int	**basic_vector(int i, int **direction)
