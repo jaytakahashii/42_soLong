@@ -6,35 +6,50 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:41 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:06:33 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:40:56 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_rectangular(int first_line_len, int line_len)
+void	check_rectangular(int first_line_len, int line_len, char **map)
 {
 	if (first_line_len != line_len)
+	{
+		free_map(map);
 		error_and_exit("Invalid map",
 			"map width size is not rectangular", NULL);
+	}
 }
 
-void	check_height(int height)
+void	check_height(int height, char **map)
 {
 	if (height < 3)
+	{
+		free_map(map);
 		error_and_exit("Invalid map",
 			"map height size must be 2 or more", NULL);
+	}
 	if (height > MAX_HEIGHT_IMAGE)
+	{
+		free_map(map);
 		error_and_exit("Invalid map", "map height size is too big", NULL);
+	}
 }
 
-void	check_width(int width)
+void	check_width(int width, char **map)
 {
 	if (width < 3)
+	{
+		free_map(map);
 		error_and_exit("Invalid map",
 			"map width size must be 2 or more", NULL);
+	}
 	if (width > MAX_WIDTH_IMAGE)
+	{
+		free_map(map);
 		error_and_exit("Invalid map", "map width size is too big", NULL);
+	}
 }
 
 void	check_outer_wall(int x, int y, t_game *game, char map_c)
@@ -43,15 +58,21 @@ void	check_outer_wall(int x, int y, t_game *game, char map_c)
 		|| x == game->map.width - 1 || y == game->map.height - 1)
 	{
 		if (map_c != WALL)
+		{
+			free_map(game->map.map_str);
 			error_and_exit("Invalid map",
 				"map must be closed/surrounded by walls.", NULL);
+		}
 	}
 }
 
-void	check_valid_char(char map_c)
+void	check_valid_char(char map_c, char **map)
 {
 	if (map_c != EMPTY && map_c != WALL
 		&& map_c != COLLECTIBLE && map_c != EXIT && map_c != PLAYER)
+	{
+		free_map(map);
 		error_and_exit("Invalid map",
 			"map must contain only 0, 1, C, E, and P", NULL);
+	}
 }

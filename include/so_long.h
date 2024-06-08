@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 14:05:34 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:43:14 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,15 +160,16 @@ void	clear_check(t_game *game);
 void	map_init(t_game *game);
 
 // map_utils.c
-void	check_width(int width);
-void	check_valid_char(char map_c);
+void	check_width(int width, char **map);
 void	check_outer_wall(int x, int y, t_game *game, char map_c);
-void	check_height(int height);
-void	check_rectangular(int first_line_len, int line_len);
+void	check_valid_char(char map_c, char **map);
+void	check_rectangular(int first_line_len, int line_len, char **map);
+void	check_height(int height, char **map);
 
 // utils.c
 int		strlen_double_ptr(char **str);
 void	add_player(t_game *game, int x, int y, char map_c);
+void	free_map(char **map);
 
 // dfs.c
 bool	dfs(t_game *game, t_point player, char target);
@@ -195,5 +196,6 @@ t_node	*init_node(t_point point);
 bool	is_valid_point(t_game *game, t_point point, char target);
 bool	is_target(t_game *game, char target, t_dfs *dfs);
 int		**basic_vector(int i, int **direction);
+void	free_dfs(t_dfs *dfs, int map_height);
 
 #endif

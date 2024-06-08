@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:22 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 13:39:26 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:54:07 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,42 @@ int	**basic_vector(int i, int **direction)
 		direction[i][1] = -1;
 	}
 	return (direction);
+}
+
+void	free_int_map(int **map, int height)
+{
+	int	i;
+
+	i = 0;
+	while (i < height)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*node;
+	t_node	*tmp;
+
+	node = stack->top;
+	while (node)
+	{
+		tmp = node->next;
+		free(node);
+		node = tmp;
+	}
+	stack->top = NULL;
+}
+
+void	free_dfs(t_dfs *dfs, int map_height)
+{
+	if (dfs->visited)
+		free_int_map(dfs->visited, map_height);
+	if (dfs->direction)
+		free_int_map(dfs->direction, 4);
+	if (dfs->stack.top)
+		free_stack(&dfs->stack);
 }

@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:06:08 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 17:16:34 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:33:20 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char	**get_map(int fd)
 
 	map_str = get_str(fd);
 	map = ft_split(map_str, '\n');
+	free(map_str);
 	if (!map)
 		error_and_exit("Split error", NULL, NULL);
-	free(map_str);
 	close(fd);
 	return (map);
 }
