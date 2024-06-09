@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:34 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 18:16:32 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:22:41 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,3 @@ int	main(int ac, char **av)
 	mlx_loop(game.mlx);
 	return (0);
 }
-
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q so_long");
-// }
