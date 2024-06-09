@@ -6,7 +6,7 @@
 /*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:47 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/05 12:55:44 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:58:19 by jtakahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	up_player(t_game *game)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
+			ft_printf("Move count: %d\n", ++(game->player.move_count));
 			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
@@ -74,6 +75,7 @@ void	down_player(t_game *game)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
+			ft_printf("Move count: %d\n", ++(game->player.move_count));
 			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
@@ -101,6 +103,7 @@ void	left_player(t_game *game)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
+			ft_printf("Move count: %d\n", ++(game->player.move_count));
 			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
@@ -128,6 +131,7 @@ void	right_player(t_game *game)
 	{
 		if (game->player.get_coin == game->map.total_coin)
 		{
+			ft_printf("Move count: %d\n", ++(game->player.move_count));
 			put_message(GREEN"Congratulations"ENDC, "CLEAR!");
 			close_window(game);
 		}
