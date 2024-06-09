@@ -6,7 +6,7 @@
 /*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:11:07 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/09 11:53:16 by jay              ###   ########.fr       */
+/*   Updated: 2024/06/09 12:28:55 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@
 #  define MAX_HEIGHT_IMAGE 33
 // max size for mac image (42x42) : 60 * 33 = 1980
 #  define MAX_IMAGE 1980
-// max size for mac read : (MAX_WIDTH_IMAGE + 1) * MAX_HEIGHT_IMAGE = 61 * 33 = 2013
+// max size for mac read :
+	//(MAX_WIDTH_IMAGE + 1) * MAX_HEIGHT_IMAGE = 61 * 33 = 2013
 #  define MAX_READ_SIZE 2013
 #  define READ_SIZE 2500
 #  define DESTROYNOTIFY 17
@@ -71,7 +72,8 @@
 #  define MAX_HEIGHT_IMAGE 25
 // max size for linux image (42x42) : 45 * 25 = 1125
 #  define MAX_IMAGE 1125
-// max size for linux read : (MAX_WIDTH_IMAGE + 1) * MAX_HEIGHT_IMAGE = 46 * 25 = 1150
+// max size for linux read :
+	// (MAX_WIDTH_IMAGE + 1) * MAX_HEIGHT_IMAGE = 46 * 25 = 1150
 #  define MAX_READ_SIZE 1150
 #  define READ_SIZE 1500
 #  define DESTROYNOTIFY DestroyNotify
