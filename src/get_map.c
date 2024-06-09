@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:06:08 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 13:33:20 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:35:17 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ static char	*get_str(int fd)
 		error_and_exit("Malloc error", NULL, NULL);
 	read_bytes = read(fd, str, READ_SIZE);
 	if (read_bytes < 0)
+	{
+		free(str);
 		error_and_exit("Read error", NULL, NULL);
+	}
 	if (read_bytes > MAX_READ_SIZE)
+	{
+		free(str);
 		error_and_exit("Map is too big", NULL, NULL);
+	}
 	str[read_bytes] = '\0';
 	return (str);
 }
