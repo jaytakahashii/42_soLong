@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtakahas <jtakahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jay <jay@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:49:04 by jtakahas          #+#    #+#             */
-/*   Updated: 2024/06/08 17:55:54 by jtakahas         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:30:17 by jay              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,11 @@ bool	dfs(t_game *game, t_point player, char target)
 	int		i;
 	bool	found;
 
-	found = false;
 	dfs_init(&dfs);
+	i = 0;
+	found = false;
 	dfs.visited = init_visited(game, player);
-	if (!dfs.visited)
-		return (false);
-	if (!push(&dfs.stack, player))
+	if (!dfs.visited || !push(&dfs.stack, player))
 		i = -1;
 	while (dfs.stack.top && i != -1)
 	{
