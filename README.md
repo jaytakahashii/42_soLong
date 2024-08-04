@@ -63,7 +63,11 @@ The solong project involves creating a basic 2D game where the player can move a
 To compile the  libft library and this project code, go to its path and run:
 
 ```shell
+# MacOS
 $ make
+
+# LinuxOS
+$ make linux
 ```
 
 **2. Run**
