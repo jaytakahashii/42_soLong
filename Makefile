@@ -1,19 +1,29 @@
+MAKEFILE = Makefile
+
 NAME = so_long
+
+SRC_DIR = src/
+OBJ_DIR = .obj/
+
 NAME_LINUX = so_long_linux
-LIBFT_NAME = libft
+
+LIBFT_NAME = libft.a
 LIBFT_DIR = libft/
+
 INCLUDE_DIR = include/
 INCLUDE = -I $(INCLUDE_DIR)
 LIBFT_INCLUDE = -I $(LIBFT_DIR)$(INCLUDE_DIR)
-SRC_DIR = src/
-OBJ_DIR = .obj/
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX_MAC_FLAGS = -l mlx -framework OpenGL -framework AppKit
+PEDANTIC = --pedantic
+SANITIZE = -fsanitize=address
+
+#macOS
+MLX_MAC_FLAGS = -l -framework OpenGL -framework AppKit
+#Linux
 MLX_LINUX_FLAGS = -lmlx_Linux -lXext -lX11
 
-AR = ar
-ARFLAGS = rcs
 RM = rm -rf
 NORM = norminette
 
@@ -49,46 +59,43 @@ all: $(NAME)
 linux: $(NAME_LINUX)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@echo "\n"
-	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
-	@echo $(B) "*** $(NAME) creating ***" $(X)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_MAC_FLAGS) -o $(NAME)
-	@echo "\n"
-	@echo $(G) "!!!!!!! $(NAME) created success !!!!!!!" $(X)
+	@echo $(G) "!! $(NAME) created !!" $(X)
 
 $(NAME_LINUX): $(OBJ_DIR) $(OBJS)
-	@echo "\n"
-	@echo $(B) "--> Into $(LIBFT_DIR)" $(X)
 	@$(MAKE) -C $(LIBFT_DIR)
-	@echo $(B) "*** $(NAME_LINUX) creating ***" $(X)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT_NAME) $(MLX_LINUX_FLAGS) -o $(NAME_LINUX)
-	@echo "\n"
-	@echo $(G) "!!!!!!! $(NAME_LINUX) created success !!!!!!!" $(X)
+	@echo $(G) "!! $(NAME_LINUX) created !!" $(X)
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@echo $(B) "Compiling $< into $@" $(X)
 	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT_INCLUDE) -c $< -o $@
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@echo $(R) "<< $(NAME) cleaning>>" $(X)
 	$(RM) $(OBJ_DIR)
-	@echo "\n"
+	@echo $(R) "$(OBJ_DIR) has been removed.\n" $(X)
 
 fclean:
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo $(R) "<< $(NAME) fcleaning >>" $(X)
 	$(RM) $(OBJ_DIR)
 	$(RM) $(NAME) $(NAME_LINUX)
-	@echo "\n"
+	@echo $(R) "$(NAME) and $(NAME_LINUX) have been removed.\n" $(X)
 
 re: fclean all
 
 relinux: fclean linux
+
+pedantic: CFLAGS += $(PEDANTIC)
+pedantic: re
+	@echo $(G) "pedantic mode activated.\n" $(X)
+
+leaks: CFLAGS += $(SANITIZE)
+leaks: re
+	@echo $(G) "leaks mode activated.\n" $(X)
 
 norm:
 	@echo $(R) "<<< $(NAME) error count >>>" $(X)

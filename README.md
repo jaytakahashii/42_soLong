@@ -78,7 +78,7 @@ After creating the executable file `so_long`, you provide the numbers you want t
 ```
 **Controls**
 - **Movement**: Use `W`, `A`, `S`, and `D` keys, or the arrow keys to move the player character around the map.
-- **Objectiv**: Navigate through the map, interact with objects, and reach the designated goal to complete the level.
+- **Objective**: Navigate through the map, interact with objects, and reach the designated goal to complete the level.
 
 **+α. Cleaning all binary (.o) and executable files**
 
